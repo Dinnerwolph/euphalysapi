@@ -1,0 +1,34 @@
+name: EpyCubeApi
+version: ${project.version}
+author: Dinnerwolph
+main: net.euphalys.core.api.EuphalysApi
+commands:
+  ban: Bannir localement et défintivement un utilisateur
+  banip: Bannir localement et défintivement une adresse IP
+  mute: Rendre muet localement et définitivement un joueur
+  warn: Avertir un joueur
+  blacklist: Blacklister un joueur §4Permission [Admin]
+  tempban: Bannir temporairement et localement un joueur
+  tempmute: Rendre temporairement et localement muet un joueur
+  info: Avoir des informations sur les sanctions d'un joueur
+  gban: Bannir globalement et définitivement un joueur
+  gtempban: Bannir temporairement et globalement un joueur
+  gbanip: Bannir globalement et définitivement une adresse IP
+  gmute: Rendre muet globalement et défintivement un utilisateur
+  gtempmute: Rendre temporairement muet globalement un utilisateur
+  closechat: Fermer localement le chat
+  openchat: Ouvrir localement le chat
+  clearchat: Nettoyer localement le chat
+  spectator: Se mettre en mode spectateur
+  inv: Consulter l'inventaire d'un joueur
+  tphere: TP Force à soi un joueur
+  kill: Tuer un joueur
+  rtp: Téléportation random à un joueur
+  freeze: Rendre immobile un joueur
+  vanish: Se rendre invisible
+  speed: Améliorer sa rapidité §9Entre 1 et 10
+  cps: Consulter les CPS d'un joueur
+  closereport: Fermer un report
+  listreport: Lister les reports
+  inforeport: Lire les informations sur un report
+  group: Commande administrative concernant les groupes utilisateurs

@@ -1,0 +1,9 @@
+bdd:
+  type: sql
+  sql:
+    host: localhost
+    port: 3306
+    database: azonarya
+    username: username
+    password: password
+servername: default

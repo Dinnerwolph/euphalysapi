@@ -1,0 +1,4 @@
+name: EpyCubeApi
+version: ${project.version}
+author: Dinnerwolph
+main: net.euphalys.bungee.api.Euphalys
