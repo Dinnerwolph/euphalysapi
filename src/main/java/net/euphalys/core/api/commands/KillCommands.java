@@ -16,18 +16,19 @@ public class KillCommands extends AbstractCommands {
 
     @Override
     public boolean onCommand(Player player, String[] args) {
-        if (args.length < 1) return false;
+        if (args.length < 1) {player.sendMessage("§cErreur : Vous n'avez pas la permission {euphalys.cms.kill}"); return false;};
         Player target = Bukkit.getPlayer(args[0]);
         if (target == null) {
-            player.sendMessage("Ce joueurs n'est pas connecté.");
+            player.sendMessage("§4Ce joueur n'est pas connecté.");
             return true;
         }
         ((CraftPlayer) target).getHandle().Q();
+        player.sendMessage("§6Vous venez de kill §6" + target.getDisplayName());
         return true;
     }
 
     @Override
     protected void displayHelp() {
-        player.sendMessage("/kill <player>");
+        player.sendMessage("§cUsage : /kill <player>");
     }
 }
