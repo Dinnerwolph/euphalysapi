@@ -16,7 +16,7 @@ public class KillCommands extends AbstractCommands {
 
     @Override
     public boolean onCommand(Player player, String[] args) {
-        if (args.length < 1) {player.sendMessage("§cErreur : Vous n'avez pas la permission {euphalys.cms.kill}"); return false;};
+        if (args.length < 1) {player.sendMessage("§cErreur : Vous n'avez pas la permission {euphalys.cmd.kill}"); return false;};
         Player target = Bukkit.getPlayer(args[0]);
         if (target == null) {
             player.sendMessage("§4Ce joueur n'est pas connecté.");
