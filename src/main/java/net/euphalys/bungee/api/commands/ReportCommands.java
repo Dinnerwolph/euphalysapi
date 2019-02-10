@@ -24,10 +24,10 @@ public class ReportCommands extends Command {
         if (commandSender instanceof ProxiedPlayer) {
             IEuphalysPlayer player = Euphalys.getInstance().getPlayer(((ProxiedPlayer) commandSender).getUniqueId());
             if (player.hasPermission("euphalys.cmd.report")) {
-                if (args.length < 2) return;
+                if (args.length < 2) {commandSender.sendMessage ("§cPour reporter un joueur, merci de suivre cette synthaxe : /report <joueur> <raison>"); return;}
                 ProxiedPlayer target = Euphalys.getInstance().getProxy().getPlayer(args[0]);
                 if (target == null) {
-                    commandSender.sendMessage("Ce joueurs n'est pas connecté.");
+                    commandSender.sendMessage("§cCe joueur n'est pas connecté.");
                     return;
                 }
                 String message = "";
@@ -36,14 +36,16 @@ public class ReportCommands extends Command {
                 }
                 Euphalys.getInstance().getReportManager().addReport(Euphalys.getInstance().getPlayer(target.getUniqueId()), player, message);
                 for (ProxiedPlayer players : Euphalys.getInstance().getProxy().getPlayers()) {
-                    if (Euphalys.getInstance().getPlayer(players.getUniqueId()).hasPermission("azonarya.moderation.viewreport")) {
-                        TextComponent component = new TextComponent(commandSender.getName() + " à report " + target.getName() + " pour la raison " + message);
+                    if (Euphalys.getInstance().getPlayer(players.getUniqueId()).hasPermission("euphalys.moderation.viewreport")) {
+                        TextComponent component = new TextComponent("§6[Report] §b" commandSender.getName() + " à report §b" + target.getName() + " pour la raison §b" + message);
                         component.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/server " + ((ProxiedPlayer) commandSender).getServer().getInfo().getName() + " report"));
-                        component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TextComponent[]{new TextComponent("Clique pour être téléporter")}));
+                        component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TextComponent[]{new TextComponent("§a[Se téléporter]")}));
                         players.sendMessage(component);
                     }
                 }
             }
+            else
+                commandSender.sendMessage("§cErreur : vous n'avez pas la permission {euphalys.cmd.report}");
         }
     }
 }

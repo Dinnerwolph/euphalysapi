@@ -21,7 +21,7 @@ public class CPSCommands extends AbstractCommands {
             player.sendMessage("§cErreur : Ce joueur n'est pas connecté.");
             return true;
         }
-        player.sendMessage("§6CPS: " + api.cps.get(target.getUniqueId()));
+        player.sendMessage("§6CPS de §e" + target.getLocation() + ":" + api.cps.get(target.getUniqueId()));
         return true;
 
     }
