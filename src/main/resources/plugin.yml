@@ -3,32 +3,61 @@ version: ${project.version}
 author: Dinnerwolph
 main: net.euphalys.core.api.EuphalysApi
 commands:
-  ban: Bannir localement et défintivement un utilisateur
-  banip: Bannir localement et défintivement une adresse IP
-  mute: Rendre muet localement et définitivement un joueur
-  warn: Avertir un joueur
-  blacklist: Blacklister un joueur §4Permission [Admin]
-  tempban: Bannir temporairement et localement un joueur
-  tempmute: Rendre temporairement et localement muet un joueur
-  info: Avoir des informations sur les sanctions d'un joueur
-  gban: Bannir globalement et définitivement un joueur
-  gtempban: Bannir temporairement et globalement un joueur
-  gbanip: Bannir globalement et définitivement une adresse IP
-  gmute: Rendre muet globalement et défintivement un utilisateur
-  gtempmute: Rendre temporairement muet globalement un utilisateur
-  closechat: Fermer localement le chat
-  openchat: Ouvrir localement le chat
-  clearchat: Nettoyer localement le chat
-  spectator: Se mettre en mode spectateur
-  inv: Consulter l'inventaire d'un joueur
-  tphere: TP Force à soi un joueur
-  kill: Tuer un joueur
-  rtp: Téléportation random à un joueur
-  freeze: Rendre immobile un joueur
-  vanish: Se rendre invisible
-  speed: Améliorer sa rapidité §9Entre 1 et 10
-  cps: Consulter les CPS d'un joueur
-  closereport: Fermer un report
-  listreport: Lister les reports
-  inforeport: Lire les informations sur un report
-  group: Commande administrative concernant les groupes utilisateurs
+  ban:
+    description: Bannir localement et défintivement un utilisateur
+  banip:
+    description: Bannir localement et défintivement une adresse IP
+  mute:
+    description: Rendre muet localement et définitivement un joueur
+  warn:
+    description: Avertir un joueur
+  blacklist:
+    description: Blacklister un joueur §4Permission [Admin]
+  tempban:
+    description: Bannir temporairement et localement un joueur
+  tempmute:
+    description: Rendre temporairement et localement muet un joueur
+  info:
+    description: Avoir des informations sur les sanctions d'un joueur
+  gban:
+    description: Bannir globalement et définitivement un joueur
+  gtempban:
+    description: Bannir temporairement et globalement un joueur
+  gbanip:
+    description: Bannir globalement et définitivement une adresse IP
+  gmute:
+    description: Rendre muet globalement et défintivement un utilisateur
+  gtempmute:
+    description: Rendre temporairement muet globalement un utilisateur
+  closechat:
+    description: Fermer localement le chat
+  openchat:
+    description: Ouvrir localement le chat
+  clearchat:
+    description: Nettoyer localement le chat
+  spectator:
+    description: Se mettre en mode spectateur
+  inv:
+    description: Consulter l'inventaire d'un joueur
+  tphere:
+    description: TP Force à soi un joueur
+  kill:
+    description: Tuer un joueur
+  rtp:
+    description: Téléportation random à un joueur
+  freeze:
+    description: Rendre immobile un joueur
+  vanish:
+    description: Se rendre invisible
+  speed:
+    description: Améliorer sa rapidité §9Entre 1 et 10
+  cps:
+    description: Consulter les CPS d'un joueur
+  closereport:
+    description: Fermer un report
+  listreport:
+    description: Lister les reports
+  inforeport:
+    description: Lire les informations sur un report
+  group:
+  description: Commande administrative concernant les groupes utilisateurs
