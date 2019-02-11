@@ -23,7 +23,7 @@ public class Invcommands extends AbstractCommands {
             return true;
         }
         player.openInventory(target.getInventory());
-        System.out.println("§6" player.getDisplayName() + "a ouvert l'inventaire de" + target.getDisplayName());
+        System.out.println("§6" + player.getDisplayName() + "a ouvert l'inventaire de" + target.getDisplayName());
         return true;
     }
 

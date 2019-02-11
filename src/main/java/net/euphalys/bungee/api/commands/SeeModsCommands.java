@@ -22,15 +22,17 @@ public class SeeModsCommands extends Command {
         if (commandSender instanceof ProxiedPlayer) {
             IEuphalysPlayer player = Euphalys.getInstance().getPlayer(((ProxiedPlayer) commandSender).getUniqueId());
             if (player.hasPermission("euphalys.cmd.seemods")) {
-                if (args.length < 1) {commandSender.sendMessage("§cErreur : Vous n'avez pas la permission d'effectuer cette commande {euphalys.cmd.seemods"); return;}
+                if (args.length < 1) {commandSender.sendMessage("§cSynthaxe : /seemods <joueur>"); return;}
                 ProxiedPlayer target = Euphalys.getInstance().getProxy().getPlayer(args[0]);
                 if (target == null) {
                     commandSender.sendMessage("Ce joueur n'est pas connecté.");
                     return;
                 }
                 for (String mods : target.getModList().keySet())
-                    commandSender.sendMessage(new TextComponent("§6Mods pour le joueur" target.getDisplayName() ":" + mods + " " + target.getModList().get(mods)));
+                    commandSender.sendMessage(new TextComponent("§6Mods pour le joueur" + target.getDisplayName() + ":" + mods + " " + target.getModList().get(mods)));
             }
+            else
+            {commandSender.sendMessage("§cErreur : Vous n'avez pas la permission d'effectuer cette commande {euphalys.cmd.seemods");}
         }
     }
 }
