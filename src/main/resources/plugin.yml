@@ -60,4 +60,4 @@ commands:
   inforeport:
     description: Lire les informations sur un report
   group:
-  description: Commande administrative concernant les groupes utilisateurs
+    description: Commande administrative concernant les groupes utilisateurs
