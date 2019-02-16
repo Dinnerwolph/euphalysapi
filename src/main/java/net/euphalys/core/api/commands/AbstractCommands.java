@@ -33,7 +33,7 @@ public abstract class AbstractCommands implements CommandExecutor {
                 }
                 return true;
             }
-            commandSender.sendMessage("§cVous n'avez pas le droit de faire ça.");
+            commandSender.sendMessage("§cErreur : Vous n'avez pas la permission (" + permission + ")");
             return true;
         }
         commandSender.sendMessage("La console ne peut faire de commande.");

@@ -24,7 +24,10 @@ public class ReportCommands extends Command {
         if (commandSender instanceof ProxiedPlayer) {
             IEuphalysPlayer player = Euphalys.getInstance().getPlayer(((ProxiedPlayer) commandSender).getUniqueId());
             if (player.hasPermission("euphalys.cmd.report")) {
-                if (args.length < 2) {commandSender.sendMessage ("§cPour reporter un joueur, merci de suivre cette synthaxe : /report <joueur> <raison>"); return;}
+                if (args.length < 2) {
+                    commandSender.sendMessage("§cPour reporter un joueur, merci de suivre cette synthaxe : /report <joueur> <raison>");
+                    return;
+                }
                 ProxiedPlayer target = Euphalys.getInstance().getProxy().getPlayer(args[0]);
                 if (target == null) {
                     commandSender.sendMessage("§cCe joueur n'est pas connecté.");
@@ -43,9 +46,9 @@ public class ReportCommands extends Command {
                         players.sendMessage(component);
                     }
                 }
+            } else {
+                commandSender.sendMessage("§cErreur : vous n'avez pas la permission {euphalys.cmd.report}");
             }
-            else
-            {commandSender.sendMessage("§cErreur : vous n'avez pas la permission {euphalys.cmd.report}");}
         }
     }
 }
