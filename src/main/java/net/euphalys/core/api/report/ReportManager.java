@@ -31,7 +31,7 @@ public class ReportManager implements IReportManager {
     public void addReport(IEuphalysPlayer target, IEuphalysPlayer player, String message) {
         try {
             Connection connection = dataSource.getConnection();
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO `report`(`azoid`, `by`, `reason`, `enable`) VALUES (?,?,?,?)");
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO `report`(`epyId`, `by`, `reason`, `enable`) VALUES (?,?,?,?)");
             statement.setInt(1, target.getEuphalysId());
             statement.setInt(2, player.getEuphalysId());
             statement.setString(3, message);
@@ -63,12 +63,12 @@ public class ReportManager implements IReportManager {
         List<IReport> returnmap = new ArrayList();
         try {
             Connection connection = dataSource.getConnection();
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM `report` WHERE `azoid`=? AND `enable`=?");
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM `report` WHERE `epyId`=? AND `enable`=?");
             statement.setInt(1, player.getEuphalysId());
             statement.setInt(2, 1);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                Report report = new Report(resultSet.getInt("id"), resultSet.getInt("by"), resultSet.getInt("azoid"), resultSet.getString("reason"));
+                Report report = new Report(resultSet.getInt("id"), resultSet.getInt("by"), resultSet.getInt("epyId"), resultSet.getString("reason"));
                 returnmap.add(report);
             }
             connection.close();
@@ -87,7 +87,7 @@ public class ReportManager implements IReportManager {
             statement.setInt(1, 1);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                Report report = new Report(resultSet.getInt("id"), resultSet.getInt("by"), resultSet.getInt("azoid"), resultSet.getString("reason"));
+                Report report = new Report(resultSet.getInt("id"), resultSet.getInt("by"), resultSet.getInt("epyId"), resultSet.getString("reason"));
                 returnmap.add(report);
             }
             connection.close();
@@ -106,12 +106,27 @@ public class ReportManager implements IReportManager {
             statement.setInt(2, 1);
             ResultSet resultSet = statement.executeQuery();
             resultSet.next();
-            IReport report = new Report(resultSet.getInt("id"), resultSet.getInt("by"), resultSet.getInt("azoid"), resultSet.getString("reason"));
+            IReport report = new Report(resultSet.getInt("id"), resultSet.getInt("by"), resultSet.getInt("epyId"), resultSet.getString("reason"));
             connection.close();
             return report;
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public int getNextId() {
+        int returnInt = -1;
+        try {
+            Connection connection = dataSource.getConnection();
+            PreparedStatement statement = connection.prepareStatement("SELECT COUNT(id) as nbr from report");
+            ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
+            returnInt = resultSet.getInt("nbr");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return returnInt;
     }
 }

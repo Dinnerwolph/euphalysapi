@@ -40,8 +40,8 @@ public class ReportCommands extends Command {
                 Euphalys.getInstance().getReportManager().addReport(Euphalys.getInstance().getPlayer(target.getUniqueId()), player, message);
                 for (ProxiedPlayer players : Euphalys.getInstance().getProxy().getPlayers()) {
                     if (Euphalys.getInstance().getPlayer(players.getUniqueId()).hasPermission("euphalys.moderation.viewreport")) {
-                        TextComponent component = new TextComponent("§6⚠ Signalement ⚠ > \n §e" + commandSender.getName() + "§6a report §e" + target.getName() + "§➡ §e" + message +"§7(ID : ?=id)");
-                        component.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/server " + ((ProxiedPlayer) commandSender).getServer().getInfo().getName() + " report"));
+                        TextComponent component = new TextComponent("§6⚠ Signalement ⚠ > \n §e" + commandSender.getName() + "§6a report §e" + target.getName() + "§➡ §e" + message + "§7(ID : " + Euphalys.getInstance().getReportManager().getNextId() + ")");
+                        component.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/server " + target.getServer().getInfo().getName() + " report"));
                         component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TextComponent[]{new TextComponent("§a[Se téléporter]")}));
                         players.sendMessage(component);
                     }
