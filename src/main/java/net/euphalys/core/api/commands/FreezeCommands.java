@@ -19,7 +19,7 @@ public class FreezeCommands extends AbstractCommands {
         if (args.length < 1) return false;
         Player target = Bukkit.getPlayer(args[0]);
         if (target == null) {
-            player.sendMessage("Ce joueurs n'est pas connecté.");
+            player.sendMessage("§cErreur : Ce joueur n'est pas connecté.");
             return true;
         }
         if (!api.freezeList.contains(target.getUniqueId()))
@@ -32,6 +32,6 @@ public class FreezeCommands extends AbstractCommands {
 
     @Override
     protected void displayHelp() {
-        player.sendMessage("/freeze player");
+        player.sendMessage("§cUsage : /freeze <player>");
     }
 }
