@@ -20,7 +20,7 @@ public class OfflineEuphalysPlayer implements IEuphalysPlayer {
     private final UUID uuid;
     private final IEuphalysPlugin plugin;
     private final IPlayerManager playerManager;
-    private final int euphaId;
+    private final int epyId;
     private final String name;
     private List<String> permissions = new ArrayList<>();
 
@@ -29,7 +29,7 @@ public class OfflineEuphalysPlayer implements IEuphalysPlayer {
         this.plugin = api;
         this.playerManager = api.getPlayerManager();
          name = playerManager.getLastName(uuid);
-        this.euphaId = getEuphalysId();
+        this.epyId = getEuphalysId();
         //TODO permissions solo ?
         //this.permissions.addAll(playerManager.getPermissions(getEuphalysId()));
         this.permissions.addAll(getGroup().getPermissions());
@@ -89,7 +89,7 @@ public class OfflineEuphalysPlayer implements IEuphalysPlayer {
 
     @Override
     public boolean isVanished() {
-        return this.plugin.getPlayerManager().isVanished(euphaId);
+        return this.plugin.getPlayerManager().isVanished(epyId);
     }
 
     @Override
@@ -104,7 +104,7 @@ public class OfflineEuphalysPlayer implements IEuphalysPlayer {
 
     @Override
     public boolean isOnline() {
-        return false;
+        return playerManager.isOnline(this.epyId);
     }
 
     @Override

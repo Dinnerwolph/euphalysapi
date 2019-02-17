@@ -277,4 +277,23 @@ public class PlayerManager implements IPlayerManager {
         }
         return returnName;
     }
+
+    @Override
+    public boolean isOnline(int id) {
+        boolean returnboolean = false;
+        try {
+            Connection connection = dataSource.getConnection();
+            PreparedStatement statement = connection.prepareStatement("SELECT `lastConnected` FROM `user` WHERE `id`=?");
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
+            int value = resultSet.getInt("lastConnected");
+            if(value == 0)
+                returnboolean = true;
+            connection.close();
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return returnboolean;
+    }
 }
