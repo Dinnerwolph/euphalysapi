@@ -28,6 +28,10 @@ public class SeeModsCommands extends Command {
                     commandSender.sendMessage("Ce joueur n'est pas connecté.");
                     return;
                 }
+                if(target.getModList().size() ==0) {
+                    commandSender.sendMessage("Ce joueurs n'utilise pas de mod.");
+                    return;
+                }
                 for (String mods : target.getModList().keySet())
                     commandSender.sendMessage(new TextComponent("§6Mods pour le joueur" + target.getDisplayName() + ":" + mods + " " + target.getModList().get(mods)));
             }

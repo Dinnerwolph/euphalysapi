@@ -5,6 +5,7 @@ import net.euphalys.api.player.IGroup;
 import net.euphalys.api.player.IPlayerManager;
 import net.euphalys.api.plugin.IEuphalysPlugin;
 import net.euphalys.api.sanctions.ISanctions;
+import net.euphalys.core.api.EuphalysApi;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -137,5 +138,10 @@ public class EuphalysPlayer implements IEuphalysPlayer {
     @Override
     public String getName() {
         return name;
+    }
+
+    @Override
+    public String getServer() {
+        return EuphalysApi.getInstance().getSProperty("name");
     }
 }

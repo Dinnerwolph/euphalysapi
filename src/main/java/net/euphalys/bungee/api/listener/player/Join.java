@@ -8,6 +8,7 @@ import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.config.ServerInfo;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.ServerConnectEvent;
+import net.md_5.bungee.api.event.ServerSwitchEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
 
@@ -80,6 +81,10 @@ public class Join implements Listener {
             ServerInfo info = map.get(servers.get(r.nextInt(servers.size())));
             event.setTarget(info);
         }
-        System.out.println(event.getTarget());
+    }
+
+    @EventHandler
+    public void a(ServerSwitchEvent event){
+        Euphalys.getInstance().getPlayerManager().setServer(Euphalys.getInstance().getPlayer(event.getPlayer().getUniqueId()).getEuphalysId(), event.getPlayer().getServer().getInfo().getName());
     }
 }

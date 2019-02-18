@@ -194,7 +194,7 @@ public class PlayerManager implements IPlayerManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        if(returnint == 1)
+        if (returnint == 1)
             return true;
         return false;
     }
@@ -287,13 +287,44 @@ public class PlayerManager implements IPlayerManager {
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             resultSet.next();
-            int value = resultSet.getInt("lastConnected");
-            if(value == 0)
+            float value = resultSet.getFloat("lastConnected");
+            if (value == 0)
                 returnboolean = true;
             connection.close();
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return returnboolean;
+    }
+
+    @Override
+    public String getServer(int id) {
+        String server = "";
+        try {
+            Connection connection = dataSource.getConnection();
+            PreparedStatement statement = connection.prepareStatement("SELECT `server` FROM `user` WHERE `id`=?");
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
+            server = resultSet.getString("server");
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return server;
+    }
+
+    @Override
+    public void setServer(int id, String server) {
+        try {
+            Connection connection = dataSource.getConnection();
+            PreparedStatement statement = connection.prepareStatement("UPDATE `user` SET `server`=? WHERE `id`=?");
+            statement.setString(1, server);
+            statement.setInt(2, id);
+            statement.executeUpdate();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
