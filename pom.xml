@@ -24,7 +24,7 @@
         <dependency>
             <groupId>net.euphalys</groupId>
             <artifactId>api</artifactId>
-            <version>0.4.2</version>
+            <version>0.4.3</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -45,6 +45,13 @@
             <version>1.9</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/../api/src/main/resources/spigot.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>spigot</groupId>
+            <artifactId>spigot-1.8.8</artifactId>
+            <version>1.8.8</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/resources/spigot-1.8.8.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>fr.dinnerwolph</groupId>

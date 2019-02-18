@@ -12,6 +12,7 @@ import net.euphalys.api.player.IPlayerManager;
 import net.euphalys.api.plugin.IEuphalysPlugin;
 import net.euphalys.api.report.IReportManager;
 import net.euphalys.api.sanctions.ISanctionsManager;
+import net.euphalys.api.utils.IScoreboardSign;
 import net.euphalys.core.api.commands.*;
 import net.euphalys.core.api.commands.chat.ClearChatCommands;
 import net.euphalys.core.api.commands.chat.CloseChatCommands;
@@ -24,7 +25,10 @@ import net.euphalys.core.api.player.OfflineEuphalysPlayer;
 import net.euphalys.core.api.player.PlayerManager;
 import net.euphalys.core.api.report.ReportManager;
 import net.euphalys.core.api.sanctions.SanctionsManager;
+import net.euphalys.core.api.utils.ScoreboardSign1_8_R3;
+import net.euphalys.core.api.utils.ScoreboardSign1_9_R2;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.Team;
 import org.json.simple.JSONObject;
@@ -77,7 +81,6 @@ public class EuphalysApi extends JavaPlugin implements IEuphalysPlugin {
         registerCommands();
         playerManager.loadAllGroup();
         cpstask();
-
     }
 
     @Override
@@ -238,5 +241,14 @@ public class EuphalysApi extends JavaPlugin implements IEuphalysPlugin {
 
     public ChannelHandlerContext getContext() {
         return BukkitOTL.getInstance().context;
+    }
+
+    public IScoreboardSign newScoreboardSign(Player player, String objectiveName) {
+        String version = Bukkit.getBukkitVersion();
+        if(version.contains("1.8.8"))
+            return new ScoreboardSign1_8_R3(player, objectiveName);
+        else if(version.contains("1.9.4"))
+            return new ScoreboardSign1_9_R2(player, objectiveName);
+        return null;
     }
 }
