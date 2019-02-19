@@ -148,7 +148,7 @@ public class EuphalysApi extends JavaPlugin implements IEuphalysPlugin {
     }
 
     public String getServerName() {
-        return getConfig().getString("servername");
+        return getConfig().getString("name");
     }
 
     public ISanctionsManager getSanctionsManager() {
@@ -228,7 +228,7 @@ public class EuphalysApi extends JavaPlugin implements IEuphalysPlugin {
         object.put("data", data);
         String s = object.toString();
         try {
-            BukkitOTL.getInstance().context.writeAndFlush(s);
+            getContext().writeAndFlush(s);
         } catch (Exception e) {
             e.printStackTrace();
             BukkitOTL.getInstance().reconnect();
@@ -250,5 +250,13 @@ public class EuphalysApi extends JavaPlugin implements IEuphalysPlugin {
         else if(version.contains("1.9.4"))
             return new ScoreboardSign1_9_R2(player, objectiveName);
         return null;
+    }
+
+    public void sendToHub(Player player){
+        JSONObject object = new JSONObject();
+        object.put("server", getServerName());
+        object.put("type", "SEND_TO_HUB");
+        object.put("data", player.getName());
+        getContext().writeAndFlush(object.toString());
     }
 }
