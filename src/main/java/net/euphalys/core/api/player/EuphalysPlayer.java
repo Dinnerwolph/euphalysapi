@@ -1,11 +1,14 @@
 package net.euphalys.core.api.player;
 
+import com.google.common.io.ByteArrayDataOutput;
+import com.google.common.io.ByteStreams;
 import net.euphalys.api.player.IEuphalysPlayer;
 import net.euphalys.api.player.IGroup;
 import net.euphalys.api.player.IPlayerManager;
 import net.euphalys.api.plugin.IEuphalysPlugin;
 import net.euphalys.api.sanctions.ISanctions;
 import net.euphalys.core.api.EuphalysApi;
+import org.bukkit.Bukkit;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -143,5 +146,13 @@ public class EuphalysPlayer implements IEuphalysPlayer {
     @Override
     public String getServer() {
         return EuphalysApi.getInstance().getSProperty("name");
+    }
+
+    @Override
+    public void sendToServer(String server) {
+        ByteArrayDataOutput out = ByteStreams.newDataOutput();
+        out.writeUTF("Connect");
+        out.writeUTF(server);
+        Bukkit.getPlayer(uuid).sendPluginMessage(EuphalysApi.getInstance(), "BungeeCord", out.toByteArray());
     }
 }

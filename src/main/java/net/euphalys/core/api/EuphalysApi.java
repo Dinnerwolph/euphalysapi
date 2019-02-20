@@ -85,8 +85,12 @@ public class EuphalysApi extends JavaPlugin implements IEuphalysPlugin {
 
     @Override
     public void onDisable() {
-        for (Team team : this.getServer().getScoreboardManager().getMainScoreboard().getTeams()) {
-            team.unregister();
+        try {
+            for (Team team : this.getServer().getScoreboardManager().getMainScoreboard().getTeams()) {
+                team.unregister();
+            }
+        }catch (Exception e) {
+
         }
     }
 
@@ -148,7 +152,7 @@ public class EuphalysApi extends JavaPlugin implements IEuphalysPlugin {
     }
 
     public String getServerName() {
-        return getConfig().getString("name");
+        return getSProperty("name");
     }
 
     public ISanctionsManager getSanctionsManager() {
@@ -223,7 +227,7 @@ public class EuphalysApi extends JavaPlugin implements IEuphalysPlugin {
 
     private void format(String type, String data) {
         JSONObject object = new JSONObject();
-        object.put("server", BukkitOTL.getInstance().getSProperty("name"));
+        object.put("server", getServerName());
         object.put("type", type);
         object.put("data", data);
         String s = object.toString();

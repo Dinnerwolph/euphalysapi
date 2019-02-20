@@ -69,7 +69,6 @@ public class Join implements Listener {
         plugin.addPlayer(euphaPlayer);
         plugin.getPlayerManager().setLastConnection(player.getUniqueId(), 0);
         plugin.getPlayerManager().setLastAddress(player.getUniqueId(), player.getAddress().getHostString());
-        System.out.println(event.getTarget());
         if (player.getServer() == null) {
             Map<String, ServerInfo> map = plugin.getProxy().getServers();
             List<String> servers = new ArrayList();

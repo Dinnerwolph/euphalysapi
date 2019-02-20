@@ -5,7 +5,6 @@ import net.euphalys.api.player.IGroup;
 import net.euphalys.api.player.IPlayerManager;
 import net.euphalys.api.plugin.IEuphalysPlugin;
 import net.euphalys.api.sanctions.ISanctions;
-import net.euphalys.bungee.api.Euphalys;
 import net.euphalys.core.api.EuphalysApi;
 
 import java.util.ArrayList;
@@ -29,7 +28,7 @@ public class OfflineEuphalysPlayer implements IEuphalysPlayer {
         this.uuid = uuid;
         this.plugin = api;
         this.playerManager = api.getPlayerManager();
-         name = playerManager.getLastName(uuid);
+        name = playerManager.getLastName(uuid);
         this.epyId = getEuphalysId();
         //TODO permissions solo ?
         //this.permissions.addAll(playerManager.getPermissions(getEuphalysId()));
@@ -121,5 +120,10 @@ public class OfflineEuphalysPlayer implements IEuphalysPlayer {
     @Override
     public String getServer() {
         return EuphalysApi.getInstance().getPlayerManager().getServer(this.epyId);
+    }
+
+    @Override
+    public void sendToServer(String server) {
+
     }
 }
