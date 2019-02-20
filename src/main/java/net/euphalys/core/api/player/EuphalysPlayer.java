@@ -8,7 +8,6 @@ import net.euphalys.api.player.IPlayerManager;
 import net.euphalys.api.plugin.IEuphalysPlugin;
 import net.euphalys.api.sanctions.ISanctions;
 import net.euphalys.core.api.EuphalysApi;
-import org.bukkit.Bukkit;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -150,9 +149,6 @@ public class EuphalysPlayer implements IEuphalysPlayer {
 
     @Override
     public void sendToServer(String server) {
-        ByteArrayDataOutput out = ByteStreams.newDataOutput();
-        out.writeUTF("Connect");
-        out.writeUTF(server);
-        Bukkit.getPlayer(uuid).sendPluginMessage(EuphalysApi.getInstance(), "BungeeCord", out.toByteArray());
+        api.sendToServer(server, getUUID());
     }
 }

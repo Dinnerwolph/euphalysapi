@@ -1,5 +1,7 @@
 package net.euphalys.core.api;
 
+import com.google.common.io.ByteArrayDataOutput;
+import com.google.common.io.ByteStreams;
 import fr.dinnerwolph.otl.bukkit.BukkitOTL;
 import io.netty.channel.ChannelHandlerContext;
 import net.euphalys.api.database.IDatabaseManager;
@@ -63,6 +65,7 @@ public class EuphalysApi extends JavaPlugin implements IEuphalysPlugin {
     @Override
     public void onEnable() {
         this.saveDefaultConfig();
+        this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
         instance = this;
         if (getConfig().getString("bdd.type").equalsIgnoreCase("sql")) {
             String host = getConfig().getString("bdd.sql.host", "localhost");
@@ -262,5 +265,13 @@ public class EuphalysApi extends JavaPlugin implements IEuphalysPlugin {
         object.put("type", "SEND_TO_HUB");
         object.put("data", player.getName());
         getContext().writeAndFlush(object.toString());
+    }
+
+    @Override
+    public void sendToServer(String server, UUID uuid) {
+        ByteArrayDataOutput out = ByteStreams.newDataOutput();
+        out.writeUTF("Connect");
+        out.writeUTF(server);
+        Bukkit.getServer().getPlayer(uuid).sendPluginMessage(EuphalysApi.getInstance(), "BungeeCord", out.toByteArray());
     }
 }

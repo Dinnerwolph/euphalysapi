@@ -171,4 +171,9 @@ public class Euphalys extends Plugin implements IEuphalysPlugin {
     public GameState getGameState() {
         return null;
     }
+
+    @Override
+    public void sendToServer(String server, UUID uuid) {
+        getProxy().getPlayer(uuid).connect(getProxy().getServerInfo(server));
+    }
 }

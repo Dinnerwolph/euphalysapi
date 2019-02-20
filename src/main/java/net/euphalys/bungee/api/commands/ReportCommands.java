@@ -37,7 +37,6 @@ public class ReportCommands extends Command {
                 for (int i = 1; i < args.length; i++) {
                     message = message + args[i] + " ";
                 }
-                Euphalys.getInstance().getReportManager().addReport(Euphalys.getInstance().getPlayer(target.getUniqueId()), player, message);
                 for (ProxiedPlayer players : Euphalys.getInstance().getProxy().getPlayers()) {
                     if (Euphalys.getInstance().getPlayer(players.getUniqueId()).hasPermission("euphalys.moderation.viewreport")) {
                         TextComponent component = new TextComponent("§6⚠ Signalement ⚠ > \n §e" + commandSender.getName() + "§6a report §e" + target.getName() + "§➡ §e" + message + "§7(ID : " + Euphalys.getInstance().getReportManager().getNextId() + ")");
@@ -46,6 +45,7 @@ public class ReportCommands extends Command {
                         players.sendMessage(component);
                     }
                 }
+                Euphalys.getInstance().getReportManager().addReport(Euphalys.getInstance().getPlayer(target.getUniqueId()), player, message);
             } else {
                 commandSender.sendMessage("§cErreur : vous n'avez pas la permission {euphalys.cmd.report}");
             }

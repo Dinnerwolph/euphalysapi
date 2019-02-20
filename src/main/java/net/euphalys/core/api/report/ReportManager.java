@@ -120,10 +120,13 @@ public class ReportManager implements IReportManager {
         int returnInt = -1;
         try {
             Connection connection = dataSource.getConnection();
-            PreparedStatement statement = connection.prepareStatement("SELECT COUNT(id) as nbr from report");
+            PreparedStatement statement = connection.prepareStatement("SELECT `AUTO_INCREMENT`\n" +
+                    "FROM  INFORMATION_SCHEMA.TABLES\n" +
+                    "WHERE TABLE_SCHEMA = 'epycube'\n" +
+                    "AND   TABLE_NAME   = 'report';");
             ResultSet resultSet = statement.executeQuery();
             resultSet.next();
-            returnInt = resultSet.getInt("nbr");
+            returnInt = resultSet.getInt("AUTO_INCREMENT");
         } catch (SQLException e) {
             e.printStackTrace();
         }

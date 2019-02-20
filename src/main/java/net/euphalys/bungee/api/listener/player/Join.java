@@ -1,5 +1,6 @@
 package net.euphalys.bungee.api.listener.player;
 
+import net.euphalys.api.player.IEuphalysPlayer;
 import net.euphalys.api.sanctions.ISanctions;
 import net.euphalys.api.sanctions.SanctionsType;
 import net.euphalys.bungee.api.Euphalys;
@@ -32,7 +33,7 @@ public class Join implements Listener {
     @EventHandler
     public void onPlayerJoin(ServerConnectEvent event) {
         ProxiedPlayer player = event.getPlayer();
-        EuphalysPlayer euphaPlayer = new EuphalysPlayer(player.getUniqueId(), player.getName(), plugin);
+        IEuphalysPlayer euphaPlayer = new EuphalysPlayer(player.getUniqueId(), player.getName(), plugin);
         if(euphaPlayer.getGroup().getGroupId() < 10) {
             player.disconnect(new TextComponent("Serveur en maintenance."));
             return;
