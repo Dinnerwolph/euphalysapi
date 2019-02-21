@@ -1,7 +1,5 @@
 package net.euphalys.core.api.player;
 
-import com.google.common.io.ByteArrayDataOutput;
-import com.google.common.io.ByteStreams;
 import net.euphalys.api.player.IEuphalysPlayer;
 import net.euphalys.api.player.IGroup;
 import net.euphalys.api.player.IPlayerManager;

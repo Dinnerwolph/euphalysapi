@@ -41,5 +41,7 @@ public class Chat implements Listener {
                 }
             }
         }
+
+        event.setFormat(String.format(player.getGroup().getChatFormat(), player.getGroup().getPrefix(), player.getName(), event.getMessage()));
     }
 }

@@ -13,13 +13,17 @@ public class Group implements IGroup {
     int id;
     String name;
     String displayName;
+    String suffix;
+    String chatFormat;
     int ladder;
     List<String> permissions;
 
-    public Group(int id, String name, String displayName, int ladder, List<String> permissions) {
+    public Group(int id, String name, String displayName, String suffix, String chatFormat, int ladder, List<String> permissions) {
         this.id = id;
         this.name = name;
         this.displayName = displayName;
+        this.suffix = suffix;
+        this.chatFormat = chatFormat;
         this.ladder = ladder;
         this.permissions = permissions;
     }
@@ -30,8 +34,18 @@ public class Group implements IGroup {
     }
 
     @Override
-    public String getDisplayName() {
+    public String getPrefix() {
         return displayName;
+    }
+
+    @Override
+    public String getSuffix() {
+        return null;
+    }
+
+    @Override
+    public String getChatFormat() {
+        return null;
     }
 
     @Override
