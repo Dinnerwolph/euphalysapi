@@ -42,6 +42,6 @@ public class Chat implements Listener {
             }
         }
 
-        event.setFormat(String.format(player.getGroup().getChatFormat(), player.getGroup().getPrefix(), player.getName(), event.getMessage()));
+        event.setFormat(String.format(player.getGroup().getChatFormat(), player.getGroup().getName(), player.getName(), event.getMessage()));
     }
 }

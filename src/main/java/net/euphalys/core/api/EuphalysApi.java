@@ -15,6 +15,8 @@ import net.euphalys.api.plugin.IEuphalysPlugin;
 import net.euphalys.api.report.IReportManager;
 import net.euphalys.api.sanctions.ISanctionsManager;
 import net.euphalys.api.utils.IScoreboardSign;
+import net.euphalys.bungee.api.commands.sanctions.BlackListCommands;
+import net.euphalys.bungee.api.commands.sanctions.WarnCommands;
 import net.euphalys.core.api.commands.*;
 import net.euphalys.core.api.commands.chat.ClearChatCommands;
 import net.euphalys.core.api.commands.chat.CloseChatCommands;
@@ -92,7 +94,7 @@ public class EuphalysApi extends JavaPlugin implements IEuphalysPlugin {
             for (Team team : this.getServer().getScoreboardManager().getMainScoreboard().getTeams()) {
                 team.unregister();
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
 
         }
     }
@@ -185,18 +187,10 @@ public class EuphalysApi extends JavaPlugin implements IEuphalysPlugin {
     }
 
     private void registerCommands() {
-        new BanCommands();
-        new BanIpCommands();
-        new MuteCommands();
-        new WarnCommands();
-        new BlackListCommands();
         new TempBanCommands();
         new TempMuteCommands();
         new InfoCommands();
-        new GBanCommands();
         new GTempBanCommands();
-        new GBanIpCommands();
-        new GMuteCommands();
         new GTempMuteCommands();
         new CloseChatCommands();
         new OpenChatCommands();
@@ -252,14 +246,14 @@ public class EuphalysApi extends JavaPlugin implements IEuphalysPlugin {
 
     public IScoreboardSign newScoreboardSign(Player player, String objectiveName) {
         String version = Bukkit.getBukkitVersion();
-        if(version.contains("1.8.8"))
+        if (version.contains("1.8.8"))
             return new ScoreboardSign1_8_R3(player, objectiveName);
-        else if(version.contains("1.9.4"))
+        else if (version.contains("1.9.4"))
             return new ScoreboardSign1_9_R2(player, objectiveName);
         return null;
     }
 
-    public void sendToHub(Player player){
+    public void sendToHub(Player player) {
         JSONObject object = new JSONObject();
         object.put("server", getServerName());
         object.put("type", "SEND_TO_HUB");

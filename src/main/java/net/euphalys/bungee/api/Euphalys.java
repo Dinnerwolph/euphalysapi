@@ -12,6 +12,9 @@ import net.euphalys.api.plugin.IEuphalysPlugin;
 import net.euphalys.api.report.IReportManager;
 import net.euphalys.api.sanctions.ISanctionsManager;
 import net.euphalys.bungee.api.commands.*;
+import net.euphalys.bungee.api.commands.sanctions.BanCommands;
+import net.euphalys.bungee.api.commands.sanctions.BanIpCommands;
+import net.euphalys.bungee.api.commands.sanctions.MuteCommands;
 import net.euphalys.bungee.api.listener.ListenerManager;
 import net.euphalys.core.api.database.SQLDatabaseManager;
 import net.euphalys.core.api.friends.FriendsManager;
@@ -56,6 +59,9 @@ public class Euphalys extends Plugin implements IEuphalysPlugin {
         getProxy().getPluginManager().registerCommand(this, new HubCommands());
         getProxy().getPluginManager().registerCommand(this, new ReportCommands());
         getProxy().getPluginManager().registerCommand(this, new ServerCommands());
+        getProxy().getPluginManager().registerCommand(this, new BanCommands());
+        getProxy().getPluginManager().registerCommand(this, new BanIpCommands());
+        getProxy().getPluginManager().registerCommand(this, new MuteCommands());
         if (!getDataFolder().exists()) {
             getDataFolder().mkdir();
         }
@@ -107,8 +113,8 @@ public class Euphalys extends Plugin implements IEuphalysPlugin {
 
     @Override
     public IEuphalysPlayer getPlayer(String name) {
-        if (getInstance().getPlayer(name) != null)
-            return getPlayer(getInstance().getPlayer(name).getUUID());
+        if (getProxy().getPlayer(name) != null)
+            return getPlayer(getProxy().getPlayer(name).getUniqueId());
         return getPlayer(getPlayerManager().getUUID(name));
     }
 

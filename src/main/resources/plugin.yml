@@ -3,30 +3,14 @@ version: ${project.version}
 author: Dinnerwolph
 main: net.euphalys.core.api.EuphalysApi
 commands:
-  ban:
-    description: Bannir localement et défintivement un utilisateur
-  banip:
-    description: Bannir localement et défintivement une adresse IP
-  mute:
-    description: Rendre muet localement et définitivement un joueur
-  warn:
-    description: Avertir un joueur
-  blacklist:
-    description: Blacklister un joueur §4Permission [Admin]
   tempban:
     description: Bannir temporairement et localement un joueur
   tempmute:
     description: Rendre temporairement et localement muet un joueur
   info:
     description: Avoir des informations sur les sanctions d'un joueur
-  gban:
-    description: Bannir globalement et définitivement un joueur
   gtempban:
     description: Bannir temporairement et globalement un joueur
-  gbanip:
-    description: Bannir globalement et définitivement une adresse IP
-  gmute:
-    description: Rendre muet globalement et défintivement un utilisateur
   gtempmute:
     description: Rendre temporairement muet globalement un utilisateur
   closechat:

@@ -25,7 +25,7 @@ public class RankTabList {
         int scoreboardId = EuphalysApi.getInstance().getGroup(groupid).getLadder();
         if (scoreboard.getTeam(scoreboardId + "") == null) {
             team = scoreboard.registerNewTeam(scoreboardId + "");
-            team.setPrefix(EuphalysApi.getInstance().getGroup(groupid).getDisplayName() + " ");
+            team.setPrefix(EuphalysApi.getInstance().getGroup(groupid).getPrefix() + " ");
         } else
             team = scoreboard.getTeam(scoreboardId + "");
         team.addPlayer(player);

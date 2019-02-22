@@ -56,7 +56,7 @@ public class SanctionsManager implements ISanctionsManager {
 
     @Override
     public void addGlobalSanction(IEuphalysPlayer target, SanctionsType type, int duration, String message, IEuphalysPlayer player) {
-        addsanction(player, type, duration, "global", message, player);
+        addsanction(target, type, duration, "global", message, player);
     }
 
     @Override
