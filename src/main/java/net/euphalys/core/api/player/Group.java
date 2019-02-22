@@ -40,12 +40,12 @@ public class Group implements IGroup {
 
     @Override
     public String getSuffix() {
-        return null;
+        return suffix;
     }
 
     @Override
     public String getChatFormat() {
-        return null;
+        return chatFormat;
     }
 
     @Override
