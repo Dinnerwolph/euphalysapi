@@ -19,17 +19,11 @@ import java.util.Set;
 public abstract class AbstractSanctions extends Command implements TabExecutor {
 
     private final String permission;
-    private final int start;
     private CommandSender commandSender;
 
-    AbstractSanctions(String name, String permission) {
-        this(name, permission, 1);
-    }
-
-    public AbstractSanctions(String name, String permission, int i) {
+    public AbstractSanctions(String name, String permission) {
         super(name);
         this.permission = permission;
-        this.start = i;
     }
 
 
@@ -39,9 +33,9 @@ public abstract class AbstractSanctions extends Command implements TabExecutor {
         if (commandSender instanceof ProxiedPlayer) {
             IEuphalysPlayer player = Euphalys.getInstance().getPlayer(((ProxiedPlayer) commandSender).getUniqueId());
             if (player.hasPermission(permission))
-                if (!(strings.length < start + 1)) {
+                if (!(strings.length < 2)) {
                     String message = "";
-                    for (int i = start; i < strings.length; i++)
+                    for (int i = 1; i < strings.length; i++)
                         message = message + strings[i] + " ";
                     if (!onCommand(player, strings[0], message))
                         displayHelp();

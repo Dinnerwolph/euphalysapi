@@ -25,6 +25,8 @@ import java.util.Random;
 public class Join implements Listener {
 
     private final Euphalys plugin;
+    private final int version[] = {47, 110, 340, 404};
+    private final String server[] = {"Hub1-8", "Hub1-9", "Hub1-12", "Hub1-13"};
 
     public Join(Euphalys plugin) {
         this.plugin = plugin;
@@ -34,7 +36,7 @@ public class Join implements Listener {
     public void onPlayerJoin(ServerConnectEvent event) {
         ProxiedPlayer player = event.getPlayer();
         IEuphalysPlayer euphaPlayer = new EuphalysPlayer(player.getUniqueId(), player.getName(), plugin);
-        if(euphaPlayer.getGroup().getGroupId() < 10) {
+        if (euphaPlayer.getGroup().getGroupId() < 10) {
             player.disconnect(new TextComponent("Serveur en maintenance."));
             return;
         }
@@ -70,13 +72,17 @@ public class Join implements Listener {
         plugin.addPlayer(euphaPlayer);
         plugin.getPlayerManager().setLastConnection(player.getUniqueId(), 0);
         plugin.getPlayerManager().setLastAddress(player.getUniqueId(), player.getAddress().getHostString());
+        int playerVer = event.getPlayer().getPendingConnection().getVersion();
+        int count = -1;
+        for (int i : version)
+            if (playerVer >= i)
+                count++;
         if (player.getServer() == null) {
             Map<String, ServerInfo> map = plugin.getProxy().getServers();
             List<String> servers = new ArrayList();
-            for (String s : map.keySet()) {
-                if (s.startsWith("Hub"))
+            for (String s : map.keySet())
+                if (s.startsWith(server[count]))
                     servers.add(s);
-            }
             Random r = new Random();
             ServerInfo info = map.get(servers.get(r.nextInt(servers.size())));
             event.setTarget(info);
@@ -84,7 +90,7 @@ public class Join implements Listener {
     }
 
     @EventHandler
-    public void a(ServerSwitchEvent event){
+    public void a(ServerSwitchEvent event) {
         Euphalys.getInstance().getPlayerManager().setServer(Euphalys.getInstance().getPlayer(event.getPlayer().getUniqueId()).getEuphalysId(), event.getPlayer().getServer().getInfo().getName());
     }
 }

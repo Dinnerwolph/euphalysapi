@@ -3,16 +3,8 @@ version: ${project.version}
 author: Dinnerwolph
 main: net.euphalys.core.api.EuphalysApi
 commands:
-  tempban:
-    description: Bannir temporairement et localement un joueur
-  tempmute:
-    description: Rendre temporairement et localement muet un joueur
   info:
     description: Avoir des informations sur les sanctions d'un joueur
-  gtempban:
-    description: Bannir temporairement et globalement un joueur
-  gtempmute:
-    description: Rendre temporairement muet globalement un utilisateur
   closechat:
     description: Fermer localement le chat
   openchat:

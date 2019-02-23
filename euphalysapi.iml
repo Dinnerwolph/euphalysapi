@@ -54,7 +54,25 @@
     <orderEntry type="module-library">
       <library name="Maven: spigot:spigot-1.8.8:1.8.8">
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/src/main/resources/spigot-1.8.8.jar!/" />
+          <root url="jar://$MODULE_DIR$/spigot-1.8.8.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: spigot:spigot-1.12.2:1.12.2">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/spigot-1.12.2.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: spigot:spigot-1.13.2:1.13.2">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/spigot-1.13.2.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

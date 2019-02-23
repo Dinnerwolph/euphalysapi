@@ -15,8 +15,6 @@ import net.euphalys.api.plugin.IEuphalysPlugin;
 import net.euphalys.api.report.IReportManager;
 import net.euphalys.api.sanctions.ISanctionsManager;
 import net.euphalys.api.utils.IScoreboardSign;
-import net.euphalys.bungee.api.commands.sanctions.BlackListCommands;
-import net.euphalys.bungee.api.commands.sanctions.WarnCommands;
 import net.euphalys.core.api.commands.*;
 import net.euphalys.core.api.commands.chat.ClearChatCommands;
 import net.euphalys.core.api.commands.chat.CloseChatCommands;
@@ -29,6 +27,8 @@ import net.euphalys.core.api.player.OfflineEuphalysPlayer;
 import net.euphalys.core.api.player.PlayerManager;
 import net.euphalys.core.api.report.ReportManager;
 import net.euphalys.core.api.sanctions.SanctionsManager;
+import net.euphalys.core.api.utils.ScoreboardSign1_12_R1;
+import net.euphalys.core.api.utils.ScoreboardSign1_13_R2;
 import net.euphalys.core.api.utils.ScoreboardSign1_8_R3;
 import net.euphalys.core.api.utils.ScoreboardSign1_9_R2;
 import org.bukkit.Bukkit;
@@ -187,11 +187,7 @@ public class EuphalysApi extends JavaPlugin implements IEuphalysPlugin {
     }
 
     private void registerCommands() {
-        new TempBanCommands();
-        new TempMuteCommands();
         new InfoCommands();
-        new GTempBanCommands();
-        new GTempMuteCommands();
         new CloseChatCommands();
         new OpenChatCommands();
         new ClearChatCommands();
@@ -250,6 +246,10 @@ public class EuphalysApi extends JavaPlugin implements IEuphalysPlugin {
             return new ScoreboardSign1_8_R3(player, objectiveName);
         else if (version.contains("1.9.4"))
             return new ScoreboardSign1_9_R2(player, objectiveName);
+        else if (version.contains("1.12.2"))
+            return new ScoreboardSign1_12_R1(player, objectiveName);
+        else if (version.contains("1.13.2"))
+            return new ScoreboardSign1_13_R2(player, objectiveName);
         return null;
     }
 

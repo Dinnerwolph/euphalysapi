@@ -29,12 +29,12 @@ public class SanctionsManager implements ISanctionsManager {
     }
 
     @Override
-    public void addsanction(IEuphalysPlayer target, SanctionsType type, int duration, String message, IEuphalysPlayer player) {
+    public void addsanction(IEuphalysPlayer target, SanctionsType type, long duration, String message, IEuphalysPlayer player) {
         addsanction(player, type, duration, api.getServerName(), message, player);
     }
 
     @Override
-    public void addsanction(IEuphalysPlayer target, SanctionsType type, int duration, String server, String message, IEuphalysPlayer player) {
+    public void addsanction(IEuphalysPlayer target, SanctionsType type, long duration, String server, String message, IEuphalysPlayer player) {
         try {
             Connection connection = dataSource.getConnection();
             PreparedStatement statement = connection.prepareStatement("INSERT INTO `sanctions`(`epyId`, `type`, `duration`, `server`, `message`, `ip`, `by`, `enable`) VALUES (?,?,?,?,?,?,?,?)");
@@ -55,7 +55,7 @@ public class SanctionsManager implements ISanctionsManager {
     }
 
     @Override
-    public void addGlobalSanction(IEuphalysPlayer target, SanctionsType type, int duration, String message, IEuphalysPlayer player) {
+    public void addGlobalSanction(IEuphalysPlayer target, SanctionsType type, long duration, String message, IEuphalysPlayer player) {
         addsanction(target, type, duration, "global", message, player);
     }
 
