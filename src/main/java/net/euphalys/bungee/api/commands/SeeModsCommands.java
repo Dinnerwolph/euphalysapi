@@ -1,19 +1,11 @@
 package net.euphalys.bungee.api.commands;
 
-import com.google.common.collect.Iterables;
 import net.euphalys.api.player.IEuphalysPlayer;
 import net.euphalys.bungee.api.Euphalys;
-import net.md_5.bungee.UserConnection;
 import net.md_5.bungee.api.CommandSender;
-import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.TextComponent;
-import net.md_5.bungee.api.config.ServerInfo;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
-
-import java.util.Collections;
-import java.util.function.Function;
-import java.util.function.Predicate;
 
 /**
  * @author Dinnerwolph
@@ -52,16 +44,16 @@ public class SeeModsCommands extends Command {
     }
 
     /**public Iterable<String> onTabComplete(final CommandSender sender, final String[] args) {
-        return (Iterable) (args.length > 1 ? Collections.EMPTY_LIST : Iterables.transform(Iterables.filter(ProxyServer.getInstance().getPlayers(), new Predicate<UserConnection>() {
-            private final String lower = args.length == 0 ? "" : args[0].toLowerCase();
+     return (Iterable) (args.length > 1 ? Collections.EMPTY_LIST : Iterables.transform(Iterables.filter(ProxyServer.getInstance().getPlayers(), new Predicate<UserConnection>() {
+     private final String lower = args.length == 0 ? "" : args[0].toLowerCase();
 
-            public boolean apply(ProxiedPlayer input) {
-                return input.getName().toLowerCase().startsWith(this.lower);
-            }
-        }), new Function<UserConnection, String>() {
-            public String apply(ProxiedPlayer input) {
-                return input.getName();
-            }
-        }));
-    }*/
+     public boolean apply(ProxiedPlayer input) {
+     return input.getName().toLowerCase().startsWith(this.lower);
+     }
+     }), new Function<UserConnection, String>() {
+     public String apply(ProxiedPlayer input) {
+     return input.getName();
+     }
+     }));
+     }*/
 }

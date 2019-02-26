@@ -1,6 +1,7 @@
 package net.euphalys.core.api.player;
 
 import net.euphalys.api.player.IGroup;
+import org.bukkit.scoreboard.Score;
 
 import java.util.List;
 
@@ -15,10 +16,11 @@ public class Group implements IGroup {
     String displayName;
     String suffix;
     String chatFormat;
+    String score;
     int ladder;
     List<String> permissions;
 
-    public Group(int id, String name, String displayName, String suffix, String chatFormat, int ladder, List<String> permissions) {
+    public Group(int id, String name, String displayName, String suffix, String chatFormat, int ladder, List<String> permissions, String score) {
         this.id = id;
         this.name = name;
         this.displayName = displayName;
@@ -26,6 +28,7 @@ public class Group implements IGroup {
         this.chatFormat = chatFormat;
         this.ladder = ladder;
         this.permissions = permissions;
+        this.score = score;
     }
 
     @Override
@@ -61,5 +64,10 @@ public class Group implements IGroup {
     @Override
     public List<String> getPermissions() {
         return permissions;
+    }
+
+    @Override
+    public String getScore() {
+        return score;
     }
 }

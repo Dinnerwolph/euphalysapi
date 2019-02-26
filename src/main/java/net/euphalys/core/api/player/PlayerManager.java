@@ -68,7 +68,7 @@ public class PlayerManager implements IPlayerManager {
             Connection connection = dataSource.getConnection();
             ResultSet resultSet = connection.prepareStatement("SELECT * FROM `group` WHERE 1").executeQuery();
             while (resultSet.next()) {
-                api.addGroup(new Group(resultSet.getInt("id"), resultSet.getString("name"), resultSet.getString("prefix"), resultSet.getString("suffix"), resultSet.getString("chat"), resultSet.getInt("ladder"), getPermissions(resultSet.getInt("id"))));
+                api.addGroup(new Group(resultSet.getInt("id"), resultSet.getString("name"), resultSet.getString("prefix"), resultSet.getString("suffix"), resultSet.getString("chat"), resultSet.getInt("ladder"), getPermissions(resultSet.getInt("id")), resultSet.getString("score")));
             }
             connection.close();
         } catch (SQLException e) {
