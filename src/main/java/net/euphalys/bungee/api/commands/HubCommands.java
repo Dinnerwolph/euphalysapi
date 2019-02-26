@@ -18,6 +18,9 @@ import java.util.Random;
 
 public class HubCommands extends Command {
 
+    private final int version[] = {47, 110, 340, 404};
+    private final String server[] = {"Hub1-8", "Hub1-9", "Hub1-12", "Hub1-13"};
+
     public HubCommands() {
         super("hub", "", "lobby");
     }
@@ -28,7 +31,7 @@ public class HubCommands extends Command {
             IEuphalysPlayer player = Euphalys.getInstance().getPlayer(((ProxiedPlayer) commandSender).getUniqueId());
             if (player.hasPermission("euphalys.cmd.hub")) {
                 if (args.length < 1) {
-                    ((ProxiedPlayer) commandSender).connect(getRandomHub());
+                    ((ProxiedPlayer) commandSender).connect(getRandomHub(((ProxiedPlayer) commandSender).getPendingConnection().getVersion()));
                     return;
                 }
                 ProxiedPlayer target = Euphalys.getInstance().getProxy().getPlayer(args[0]);
@@ -36,17 +39,23 @@ public class HubCommands extends Command {
                     commandSender.sendMessage("Ce joueurs n'est pas connecté.");
                     return;
                 }
-                target.connect(getRandomHub());
+                target.connect(getRandomHub(target.getPendingConnection().getVersion()));
             }
         }
     }
 
-    private ServerInfo getRandomHub() {
+    private ServerInfo getRandomHub(int playerVer) {
+        int count = -1;
+        for (int i : version)
+            if (playerVer >= i)
+                count++;
         Map<String, ServerInfo> map = Euphalys.getInstance().getProxy().getServers();
         List<String> servers = new ArrayList();
-        for (String s : map.keySet()) {
-            if (s.startsWith("Hub"))
-                servers.add(s);
+        while (servers.size() == 0) {
+            for (String s : map.keySet())
+                if (s.startsWith(server[count]))
+                    servers.add(s);
+            count--;
         }
         Random r = new Random();
         ServerInfo info = map.get(servers.get(r.nextInt(servers.size())));

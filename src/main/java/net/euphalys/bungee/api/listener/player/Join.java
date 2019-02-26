@@ -80,9 +80,12 @@ public class Join implements Listener {
         if (player.getServer() == null) {
             Map<String, ServerInfo> map = plugin.getProxy().getServers();
             List<String> servers = new ArrayList();
-            for (String s : map.keySet())
-                if (s.startsWith(server[count]))
-                    servers.add(s);
+            while (servers.size() == 0) {
+                for (String s : map.keySet())
+                    if (s.startsWith(server[count]))
+                        servers.add(s);
+                count--;
+            }
             Random r = new Random();
             ServerInfo info = map.get(servers.get(r.nextInt(servers.size())));
             event.setTarget(info);
