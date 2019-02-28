@@ -327,4 +327,17 @@ public class PlayerManager implements IPlayerManager {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public void setNickName(int id, String nickName) {
+        try {
+            Connection connection = dataSource.getConnection();
+            PreparedStatement statement = connection.prepareStatement("UPDATE `user` SET `nickName`=? WHERE `id`=?");
+            statement.setString(1, nickName);
+            statement.setInt(2, id);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

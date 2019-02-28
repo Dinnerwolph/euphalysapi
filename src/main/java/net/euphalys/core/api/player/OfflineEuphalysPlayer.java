@@ -5,7 +5,6 @@ import net.euphalys.api.player.IGroup;
 import net.euphalys.api.player.IPlayerManager;
 import net.euphalys.api.plugin.IEuphalysPlugin;
 import net.euphalys.api.sanctions.ISanctions;
-import net.euphalys.core.api.EuphalysApi;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -104,7 +103,7 @@ public class OfflineEuphalysPlayer implements IEuphalysPlayer {
 
     @Override
     public boolean isOnline() {
-        return playerManager.isOnline(this.epyId);
+        return this.playerManager.isOnline(this.epyId);
     }
 
     @Override
@@ -119,11 +118,21 @@ public class OfflineEuphalysPlayer implements IEuphalysPlayer {
 
     @Override
     public String getServer() {
-        return EuphalysApi.getInstance().getPlayerManager().getServer(this.epyId);
+        return this.plugin.getPlayerManager().getServer(this.epyId);
     }
 
     @Override
     public void sendToServer(String server) {
 
+    }
+
+    @Override
+    public void setNickName(String nickName) {
+
+    }
+
+    @Override
+    public String getNickName() {
+        return null;
     }
 }

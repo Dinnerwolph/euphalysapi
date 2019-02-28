@@ -305,9 +305,6 @@ public class ScoreboardSign1_13_R2 implements IScoreboardSign {
 
         public Iterable<PacketPlayOutScoreboardTeam> sendLine() {
             List<PacketPlayOutScoreboardTeam> packets = new ArrayList<>();
-            System.out.println(prefix);
-            System.out.println(currentPlayer);
-            System.out.println(suffix);
 
             if (first) {
                 packets.add(createTeam());

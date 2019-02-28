@@ -24,7 +24,8 @@ public class Chat implements Listener {
             event.setCancelled(true);
             return;
         }
-        IEuphalysPlayer player = new EuphalysPlayer(event.getPlayer().getUniqueId(), event.getPlayer().getName(), EuphalysApi.getInstance());
+        IEuphalysPlayer player = EuphalysApi.getInstance().getPlayer(event.getPlayer().getUniqueId());
+
         List<ISanctions> sanctions = player.getSanctions();
         for (ISanctions sanction : sanctions) {
             if (sanction.getType().equals(SanctionsType.MUTE)) {
@@ -42,6 +43,6 @@ public class Chat implements Listener {
             }
         }
 
-        event.setFormat(String.format(player.getGroup().getChatFormat(), player.getGroup().getName(), player.getName(), event.getMessage()));
+        event.setFormat(String.format(player.getGroup().getChatFormat(), player.getGroup().getName(), player.getNickName(), event.getMessage()));
     }
 }

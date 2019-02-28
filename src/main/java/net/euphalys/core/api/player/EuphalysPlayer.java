@@ -30,12 +30,15 @@ public class EuphalysPlayer implements IEuphalysPlayer {
     private boolean vanished;
     private int time_played;
     private long connect;
+    private String nickName;
+    private IGroup realGroup;
 
     public EuphalysPlayer(UUID uuid, String name, IEuphalysPlugin api) {
         this.api = api;
         this.playerManager = api.getPlayerManager();
         this.uuid = uuid;
         this.name = name;
+        this.nickName = name;
         if (!playerManager.exist(uuid))
             playerManager.createUser(uuid, name);
         this.euphalysId = playerManager.getAzonaryaId(uuid);
@@ -44,6 +47,7 @@ public class EuphalysPlayer implements IEuphalysPlayer {
 
     private void load() {
         group = playerManager.getGroup(uuid);
+        realGroup = playerManager.getGroup(uuid);
         this.lastAddress = playerManager.getLastAddress(uuid);
         this.sanctions = api.getSanctionsManager().getSanction(this);
         //TODO permissions solo ?
@@ -148,5 +152,19 @@ public class EuphalysPlayer implements IEuphalysPlayer {
     @Override
     public void sendToServer(String server) {
         api.sendToServer(server, getUUID());
+    }
+
+    @Override
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+        if (nickName.equals(name))
+            group = realGroup;
+        else
+            group = EuphalysApi.getInstance().getGroup(0);
+    }
+
+    @Override
+    public String getNickName() {
+        return nickName;
     }
 }

@@ -19,6 +19,10 @@ import net.euphalys.core.api.commands.*;
 import net.euphalys.core.api.commands.chat.ClearChatCommands;
 import net.euphalys.core.api.commands.chat.CloseChatCommands;
 import net.euphalys.core.api.commands.chat.OpenChatCommands;
+import net.euphalys.core.api.commands.nick.NickCommands1_12_R1;
+import net.euphalys.core.api.commands.nick.NickCommands1_13_R2;
+import net.euphalys.core.api.commands.nick.NickCommands1_8_R3;
+import net.euphalys.core.api.commands.nick.NickCommands1_9_R2;
 import net.euphalys.core.api.database.SQLDatabaseManager;
 import net.euphalys.core.api.friends.FriendsManager;
 import net.euphalys.core.api.listener.ListenerManager;
@@ -62,7 +66,7 @@ public class EuphalysApi extends JavaPlugin implements IEuphalysPlugin {
     public Map<UUID, Integer> cps = new HashMap();
 
     private Map<Integer, IGroup> groupMap = new HashMap();
-    private Map<UUID, IEuphalysPlayer> playerMap = new HashMap();
+    public Map<UUID, IEuphalysPlayer> playerMap = new HashMap();
 
     @Override
     public void onEnable() {
@@ -204,6 +208,16 @@ public class EuphalysApi extends JavaPlugin implements IEuphalysPlugin {
         new ListReportCommands();
         new InfoReportCommands();
         new GroupCommands();
+        String version = Bukkit.getBukkitVersion();
+        if (version.contains("1.8.8"))
+            new NickCommands1_8_R3();
+        else if (version.contains("1.9.4"))
+            new NickCommands1_9_R2();
+        else if (version.contains("1.12.2"))
+            new NickCommands1_12_R1();
+        else if (version.contains("1.13.2"))
+            new NickCommands1_13_R2();
+
     }
 
     private void cpstask() {
