@@ -336,6 +336,7 @@ public class PlayerManager implements IPlayerManager {
             statement.setString(1, nickName);
             statement.setInt(2, id);
             statement.executeUpdate();
+            connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }

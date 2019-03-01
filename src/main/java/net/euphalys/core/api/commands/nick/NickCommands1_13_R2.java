@@ -68,14 +68,12 @@ public class NickCommands1_13_R2 extends AbstractCommands {
                 ((CraftPlayer) online).getHandle().playerConnection.sendPacket(packet);
             }
         }
-
         player.setDisplayName(arg);
         euphalysPlayer.setNickName(arg);
-        //EuphalysApi.getInstance().playerMap.put(player.getUniqueId(), euphalysPlayer);
-        if (arg.equalsIgnoreCase(entityPlayer.getName())) {
-            EuphalysApi.getInstance().getPlayerManager().setNickName(euphalysPlayer.getGroup().getGroupId(), "null");
+        if (arg.equalsIgnoreCase(euphalysPlayer.getName())) {
+            EuphalysApi.getInstance().getPlayerManager().setNickName(euphalysPlayer.getEuphalysId(), "");
         } else {
-            EuphalysApi.getInstance().getPlayerManager().setNickName(euphalysPlayer.getGroup().getGroupId(), arg);
+            EuphalysApi.getInstance().getPlayerManager().setNickName(euphalysPlayer.getEuphalysId(), arg);
 
         }
         RankTabList.updateRank(player);
@@ -91,8 +89,6 @@ public class NickCommands1_13_R2 extends AbstractCommands {
 
     private void updateSkin(Player player, String name) throws IOException {
         EntityPlayer entityPlayer = ((CraftPlayer) player).getHandle();
-
-        //entityPlayer.getStatisticManager().e();
         if (entityPlayer.getChatFlags() == EntityHuman.EnumChatVisibility.HIDDEN) {
             throw new IOException("Player denis skin packets!");
         }

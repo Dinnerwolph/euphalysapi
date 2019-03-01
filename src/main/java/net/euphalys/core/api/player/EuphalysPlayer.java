@@ -38,7 +38,6 @@ public class EuphalysPlayer implements IEuphalysPlayer {
         this.playerManager = api.getPlayerManager();
         this.uuid = uuid;
         this.name = name;
-        this.nickName = name;
         if (!playerManager.exist(uuid))
             playerManager.createUser(uuid, name);
         this.euphalysId = playerManager.getAzonaryaId(uuid);
@@ -165,6 +164,9 @@ public class EuphalysPlayer implements IEuphalysPlayer {
 
     @Override
     public String getNickName() {
-        return nickName;
+        if (nickName != null)
+            return nickName;
+        else
+            return name;
     }
 }
