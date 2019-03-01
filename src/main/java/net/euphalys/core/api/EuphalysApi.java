@@ -19,10 +19,6 @@ import net.euphalys.core.api.commands.*;
 import net.euphalys.core.api.commands.chat.ClearChatCommands;
 import net.euphalys.core.api.commands.chat.CloseChatCommands;
 import net.euphalys.core.api.commands.chat.OpenChatCommands;
-import net.euphalys.core.api.commands.nick.NickCommands1_12_R1;
-import net.euphalys.core.api.commands.nick.NickCommands1_13_R2;
-import net.euphalys.core.api.commands.nick.NickCommands1_8_R3;
-import net.euphalys.core.api.commands.nick.NickCommands1_9_R2;
 import net.euphalys.core.api.database.SQLDatabaseManager;
 import net.euphalys.core.api.friends.FriendsManager;
 import net.euphalys.core.api.listener.ListenerManager;
@@ -35,6 +31,7 @@ import net.euphalys.core.api.utils.ScoreboardSign1_12_R1;
 import net.euphalys.core.api.utils.ScoreboardSign1_13_R2;
 import net.euphalys.core.api.utils.ScoreboardSign1_8_R3;
 import net.euphalys.core.api.utils.ScoreboardSign1_9_R2;
+import net.euphalys.core.api.utils.nick.*;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -208,15 +205,7 @@ public class EuphalysApi extends JavaPlugin implements IEuphalysPlugin {
         new ListReportCommands();
         new InfoReportCommands();
         new GroupCommands();
-        String version = Bukkit.getBukkitVersion();
-        if (version.contains("1.8.8"))
-            new NickCommands1_8_R3();
-        else if (version.contains("1.9.4"))
-            new NickCommands1_9_R2();
-        else if (version.contains("1.12.2"))
-            new NickCommands1_12_R1();
-        else if (version.contains("1.13.2"))
-            new NickCommands1_13_R2();
+        new NickCommands();
 
     }
 
@@ -281,5 +270,18 @@ public class EuphalysApi extends JavaPlugin implements IEuphalysPlugin {
         out.writeUTF("Connect");
         out.writeUTF(server);
         Bukkit.getServer().getPlayer(uuid).sendPluginMessage(EuphalysApi.getInstance(), "BungeeCord", out.toByteArray());
+    }
+
+    public INickUtils getNickUtils() {
+        String version = Bukkit.getBukkitVersion();
+        if (version.contains("1.8.8"))
+            return new NickUtils1_8_R3();
+        else if (version.contains("1.9.4"))
+            return new NickUtils1_9_R2();
+        else if (version.contains("1.12.2"))
+            return new NickUtils1_12_R1();
+        else if (version.contains("1.13.2"))
+            return new NickUtils1_13_R2();
+        return null;
     }
 }

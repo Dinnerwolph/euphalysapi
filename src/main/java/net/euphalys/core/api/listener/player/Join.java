@@ -39,6 +39,9 @@ public class Join implements Listener {
         }
         for (UUID uuid : api.vanishList)
             event.getPlayer().hidePlayer(Bukkit.getPlayer(uuid));
-
+        if(player.getNickName()!="") {
+            EuphalysApi.getInstance().getNickUtils().setNickName(event.getPlayer(), player.getNickName());
+            player.setNickName(player.getNickName());
+        }
     }
 }

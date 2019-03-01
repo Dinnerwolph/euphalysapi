@@ -56,6 +56,7 @@ public class EuphalysPlayer implements IEuphalysPlayer {
         this.time_played = playerManager.getTimePlayed(euphalysId);
         this.api.getFriendsManager().loadPlayer(uuid);
         this.friends = this.api.getFriendsManager().namesFriendsList(uuid);
+        this.nickName = playerManager.getNickName(euphalysId);
         connect = System.currentTimeMillis();
     }
 

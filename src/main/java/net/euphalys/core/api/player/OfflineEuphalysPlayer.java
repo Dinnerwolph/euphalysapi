@@ -133,6 +133,6 @@ public class OfflineEuphalysPlayer implements IEuphalysPlayer {
 
     @Override
     public String getNickName() {
-        return null;
+        return playerManager.getNickName(getEuphalysId());
     }
 }
