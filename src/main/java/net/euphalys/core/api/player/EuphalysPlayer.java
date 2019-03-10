@@ -41,6 +41,7 @@ public class EuphalysPlayer implements IEuphalysPlayer {
         if (!playerManager.exist(uuid))
             playerManager.createUser(uuid, name);
         this.euphalysId = playerManager.getAzonaryaId(uuid);
+        playerManager.updateUserName(euphalysId, name);
         this.load();
     }
 

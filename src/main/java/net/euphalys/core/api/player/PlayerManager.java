@@ -45,6 +45,19 @@ public class PlayerManager implements IPlayerManager {
     }
 
     @Override
+    public void updateUserName(int id, String name) {
+        try {
+            Connection connection = dataSource.getConnection();
+            PreparedStatement statement = connection.prepareStatement("UPDATE `user` SET `playerName`=? WHERE `id`=?");
+            statement.setString(1, name);
+            statement.setInt(2, id);
+            statement.executeUpdate();
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
     public boolean exist(UUID uuid) {
         try {
             Connection connection = dataSource.getConnection();

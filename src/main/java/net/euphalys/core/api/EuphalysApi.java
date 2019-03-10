@@ -19,6 +19,7 @@ import net.euphalys.core.api.commands.*;
 import net.euphalys.core.api.commands.chat.ClearChatCommands;
 import net.euphalys.core.api.commands.chat.CloseChatCommands;
 import net.euphalys.core.api.commands.chat.OpenChatCommands;
+import net.euphalys.core.api.customentities.CustomEntityType;
 import net.euphalys.core.api.database.SQLDatabaseManager;
 import net.euphalys.core.api.friends.FriendsManager;
 import net.euphalys.core.api.listener.ListenerManager;
@@ -70,6 +71,7 @@ public class EuphalysApi extends JavaPlugin implements IEuphalysPlugin {
         this.saveDefaultConfig();
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
         instance = this;
+        CustomEntityType.registerEntities();
         if (getConfig().getString("bdd.type").equalsIgnoreCase("sql")) {
             String host = getConfig().getString("bdd.sql.host", "localhost");
             int port = getConfig().getInt("bdd.sql.port", 3306);
@@ -91,6 +93,7 @@ public class EuphalysApi extends JavaPlugin implements IEuphalysPlugin {
 
     @Override
     public void onDisable() {
+        CustomEntityType.unregisterEntities();
         try {
             for (Team team : this.getServer().getScoreboardManager().getMainScoreboard().getTeams()) {
                 team.unregister();

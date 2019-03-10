@@ -37,6 +37,7 @@ public class Join implements Listener {
         ProxiedPlayer player = event.getPlayer();
         IEuphalysPlayer euphaPlayer = new EuphalysPlayer(player.getUniqueId(), player.getName(), plugin);
         if (euphaPlayer.getGroup().getGroupId() < 10) {
+            event.setCancelled(true);
             player.disconnect(new TextComponent("Serveur en maintenance."));
             return;
         }
@@ -50,6 +51,7 @@ public class Join implements Listener {
                     }
                 }
                 if (sanction.getServer().equalsIgnoreCase("global")) {
+                    event.setCancelled(true);
                     player.disconnect(new TextComponent("Vous êtes bannis du serveur"));
                     return;
                 }
@@ -61,10 +63,12 @@ public class Join implements Listener {
                     }
                 }
                 if (sanction.getServer().equalsIgnoreCase("global")) {
+                    event.setCancelled(true);
                     player.disconnect(new TextComponent("Vous êtes bannis du serveur"));
                     return;
                 }
             } else if (sanction.getType().equals(SanctionsType.BLACKLIST)) {
+                event.setCancelled(true);
                 player.disconnect(new TextComponent("Vous ne pouvez pas vous connecter."));
                 return;
             }
