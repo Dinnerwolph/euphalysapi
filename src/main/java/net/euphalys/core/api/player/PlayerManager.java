@@ -52,7 +52,7 @@ public class PlayerManager implements IPlayerManager {
             statement.setString(1, name);
             statement.setInt(2, id);
             statement.executeUpdate();
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -370,5 +370,18 @@ public class PlayerManager implements IPlayerManager {
             e.printStackTrace();
         }
         return nickname;
+    }
+
+    @Override
+    public void setRank(int id, int rankId) {
+        try {
+            Connection connection = dataSource.getConnection();
+            PreparedStatement statement = connection.prepareStatement("UPDATE `user` SET `groupId`=? WHERE `id`=?");
+            statement.setInt(1, rankId);
+            statement.setInt(2, id);
+            statement.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -71,7 +71,7 @@ public class EuphalysApi extends JavaPlugin implements IEuphalysPlugin {
         this.saveDefaultConfig();
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
         instance = this;
-        CustomEntityType.registerEntities();
+        //CustomEntityType.registerEntities();
         if (getConfig().getString("bdd.type").equalsIgnoreCase("sql")) {
             String host = getConfig().getString("bdd.sql.host", "localhost");
             int port = getConfig().getInt("bdd.sql.port", 3306);
@@ -93,7 +93,7 @@ public class EuphalysApi extends JavaPlugin implements IEuphalysPlugin {
 
     @Override
     public void onDisable() {
-        CustomEntityType.unregisterEntities();
+        //CustomEntityType.unregisterEntities();
         try {
             for (Team team : this.getServer().getScoreboardManager().getMainScoreboard().getTeams()) {
                 team.unregister();

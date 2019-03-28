@@ -62,6 +62,7 @@ public class Euphalys extends Plugin implements IEuphalysPlugin {
         getProxy().getPluginManager().registerCommand(this, new MuteCommands());
         getProxy().getPluginManager().registerCommand(this, new TempMuteCommands());
         getProxy().getPluginManager().registerCommand(this, new TempBanCommands());
+        getProxy().getPluginManager().registerCommand(this, new RankCommands());
         if (!getDataFolder().exists()) {
             getDataFolder().mkdir();
         }

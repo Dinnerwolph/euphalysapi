@@ -1,13 +1,9 @@
 package net.euphalys.core.api.utils;
 
 import net.euphalys.api.utils.IScoreboardSign;
-import net.euphalys.core.api.EuphalysApi;
 import net.minecraft.server.v1_8_R3.*;
-import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -21,18 +17,15 @@ public class ScoreboardSign1_8_R3 implements IScoreboardSign {
     private final VirtualTeam[] lines = new VirtualTeam[15];
     private final Player player;
     private String objectiveName;
-    private BukkitTask task;
 
     /**
      * Create a scoreboard sign for a given player and using a specifig objective name
-     *
-     * @param player        the player viewing the scoreboard sign
+     * @param player the player viewing the scoreboard sign
      * @param objectiveName the name of the scoreboard sign (displayed at the top of the scoreboard)
      */
     public ScoreboardSign1_8_R3(Player player, String objectiveName) {
         this.player = player;
         this.objectiveName = objectiveName;
-        task = new LastLine().runTaskTimer(EuphalysApi.getInstance(), 15 * 20, 15 * 20);
     }
 
     /**
@@ -50,7 +43,6 @@ public class ScoreboardSign1_8_R3 implements IScoreboardSign {
             sendLine(i++);
 
         created = true;
-        setLine(14, "§7⋙ §bplay.epycube.fr");
     }
 
     /**
@@ -60,7 +52,7 @@ public class ScoreboardSign1_8_R3 implements IScoreboardSign {
     public void destroy() {
         if (!created)
             return;
-        Bukkit.getScheduler().cancelTask(task.getTaskId());
+
         getPlayer().sendPacket(createObjectivePacket(1, null));
         for (VirtualTeam team : lines)
             if (team != null)
@@ -71,7 +63,6 @@ public class ScoreboardSign1_8_R3 implements IScoreboardSign {
 
     /**
      * Change the name of the objective. The name is displayed at the top of the scoreboard.
-     *
      * @param name the name of the objective, max 32 char
      */
     public void setObjectiveName(String name) {
@@ -82,21 +73,22 @@ public class ScoreboardSign1_8_R3 implements IScoreboardSign {
 
     /**
      * Change a scoreboard line and send the packets to the player. Can be called async.
-     *
-     * @param line  the number of the line (0 <= line < 15)
+     * @param line the number of the line (0 <= line < 15)
      * @param value the new value for the scoreboard line
      */
     public void setLine(int line, String value) {
         VirtualTeam team = getOrCreateTeam(line);
+        String old = team.getCurrentPlayer();
+
+        if (old != null && created)
+            getPlayer().sendPacket(removeLine(old));
+
         team.setValue(value);
-        //if (old != null && created && team.playerChanged)
-        //  getPlayer().sendPacket(removeLine(old));
         sendLine(line);
     }
 
     /**
      * Remove a given scoreboard line
-     *
      * @param line the line to remove
      */
     public void removeLine(int line) {
@@ -113,7 +105,6 @@ public class ScoreboardSign1_8_R3 implements IScoreboardSign {
 
     /**
      * Get the current value for a line
-     *
      * @param line the line
      * @return the content of the line
      */
@@ -127,7 +118,6 @@ public class ScoreboardSign1_8_R3 implements IScoreboardSign {
 
     /**
      * Get the team assigned to a line
-     *
      * @return the {@link VirtualTeam} used to display this line
      */
     public VirtualTeam getTeam(int line) {
@@ -152,8 +142,6 @@ public class ScoreboardSign1_8_R3 implements IScoreboardSign {
 
         int score = (15 - line);
         VirtualTeam val = getOrCreateTeam(line);
-        if (val.playerChanged)
-            removeLine(line);
         for (Packet packet : val.sendLine())
             getPlayer().sendPacket(packet);
         getPlayer().sendPacket(sendScore(val.getCurrentPlayer(), score));
@@ -306,10 +294,9 @@ public class ScoreboardSign1_8_R3 implements IScoreboardSign {
             }
 
             if (first || playerChanged) {
-                if (oldPlayer != null)
-                    // remove these two lines ?
-                    //packets.add(addOrRemovePlayer(4, oldPlayer));    //
-                    packets.add(changePlayer());
+                if (oldPlayer != null)										// remove these two lines ?
+                    packets.add(addOrRemovePlayer(4, oldPlayer)); 	//
+                packets.add(changePlayer());
             }
 
             if (first)
@@ -379,31 +366,6 @@ public class ScoreboardSign1_8_R3 implements IScoreboardSign {
             field.set(edit, value);
         } catch (NoSuchFieldException | IllegalAccessException e) {
             e.printStackTrace();
-        }
-    }
-
-    private class LastLine extends BukkitRunnable {
-        private final String line[] = {"§7⋙ §bplay.epycube.fr", "§7⋙ §9p§blay.epycube.fr", "§7⋙ §bp§9l§bay.epycube.fr",
-                "§7⋙ §bpl§9a§by.epycube.fr", "§7⋙ §bpla§9y§b.epycube.fr", "§7⋙ §bplay§9.§bepycube.fr",
-                "§7⋙ §bplay.§9e§bpycube.fr", "§7⋙ §bplay.e§9p§bycube.fr", "§7⋙ §bplay.ep§9y§bcube.fr",
-                "§7⋙ §bplay.epy§9c§bube.fr", "§7⋙ §bplay.epyc§9u§bbe.fr", "§7⋙ §bplay.epycu§9b§be.fr",
-                "§7⋙ §bplay.epycub§9e§b.fr", "§7⋙ §bplay.epycube§9.§bfr", "§7⋙ §bplay.epycube.§9f§br",
-                "§7⋙ §bplay.epycube.f§9r", "§7⋙ §bplay.epycube.fr"};
-        int i = 0;
-
-        @Override
-        public void run() {
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    setLine(14, line[i++]);
-                    if (i >= line.length) {
-                        this.cancel();
-                        i = 0;
-
-                    }
-                }
-            }.runTaskTimer(EuphalysApi.getInstance(), 5L, 5L);
         }
     }
 }
