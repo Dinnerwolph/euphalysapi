@@ -384,12 +384,12 @@ public class ScoreboardSign1_9_R2 implements IScoreboardSign {
     }
 
     private class LastLine extends BukkitRunnable {
-        private final String line[] = {"§7⋙ §bplay.epycube.fr", "§7⋙ §9p§blay.epycube.fr", "§7⋙ §bp§9l§bay.epycube.fr",
-                "§7⋙ §bpl§9a§by.epycube.fr", "§7⋙ §bpla§9y§b.epycube.fr", "§7⋙ §bplay§9.§bepycube.fr",
-                "§7⋙ §bplay.§9e§bpycube.fr", "§7⋙ §bplay.e§9p§bycube.fr", "§7⋙ §bplay.ep§9y§bcube.fr",
-                "§7⋙ §bplay.epy§9c§bube.fr", "§7⋙ §bplay.epyc§9u§bbe.fr", "§7⋙ §bplay.epycu§9b§be.fr",
-                "§7⋙ §bplay.epycub§9e§b.fr", "§7⋙ §bplay.epycube§9.§bfr", "§7⋙ §bplay.epycube.§9f§br",
-                "§7⋙ §bplay.epycube.f§9r", "§7⋙ §bplay.epycube.fr"};
+        private final String line[] = {"§7⋙ §bplay.euphalys.net", "§7⋙ §9p§blay.euphalys.net", "§7⋙ §bp§9l§bay.euphalys.net",
+                "§7⋙ §bpl§9a§by.euphalys.net", "§7⋙ §bpla§9y§b.euphalys.net", "§7⋙ §bplay§9.§beuphalys.net",
+                "§7⋙ §bplay.§9e§buphalys.net", "§7⋙ §bplay.e§9u§bphalys.net", "§7⋙ §bplay.eu§9p§bhalys.net",
+                "§7⋙ §bplay.eup§9h§balys.net", "§7⋙ §bplay.euph§9a§blys.net", "§7⋙ §bplay.eupha§9l§bys.net",
+                "§7⋙ §bplay.euphal§9y§s.net", "§7⋙ §bplay.euphaly§9s§.net", "§7⋙ §bplay.euphalys§9.§bnet",
+                "§7⋙ §bplay.euphalys.§9n§bet", "§7⋙ §bplay.euphalys.n§9e§bt", "§7⋙ §bplay.euphalys.ne§9t", "§7⋙ §bplay.euphalys.net"};
         int i = 0;
 
         @Override
