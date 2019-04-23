@@ -166,9 +166,6 @@ public class EuphalysPlayer implements IEuphalysPlayer {
 
     @Override
     public String getNickName() {
-        if (nickName != null)
-            return nickName;
-        else
-            return name;
+        return nickName.isEmpty() ? name : nickName;
     }
 }

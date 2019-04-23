@@ -16,5 +16,6 @@ public class Quit implements Listener {
         Euphalys.getInstance().getPlayerManager().setLastConnection(event.getPlayer().getUniqueId(), System.currentTimeMillis());
         Euphalys.getInstance().getPlayer(event.getPlayer().getUniqueId()).setTimePlayed();
         Euphalys.getInstance().removePlayer(event.getPlayer().getUniqueId());
+        event.getPlayer().disconnect("ble");
     }
 }

@@ -24,7 +24,7 @@
         <dependency>
             <groupId>net.euphalys</groupId>
             <artifactId>api</artifactId>
-            <version>0.5.4</version>
+            <version>0.5.5</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -38,13 +38,6 @@
             <artifactId>bungeecord-api</artifactId>
             <version>1.10-SNAPSHOT</version>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>spigot</groupId>
-            <artifactId>spigot</artifactId>
-            <version>1.9</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/../api/spigot.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>spigot</groupId>
