@@ -24,7 +24,7 @@ public class BlackListCommands extends AbstractSanctions {
         Euphalys.getInstance().getSanctionsManager().addGlobalSanction(Euphalys.getInstance().getPlayer(target), SanctionsType.BLACKLIST, 0, message, player);
         ProxiedPlayer targetp = Euphalys.getInstance().getProxy().getPlayer(target);
         if (targetp != null)
-            targetp.disconnect(new TextComponent("Vous êtes blacklist."));
+            targetp.disconnect(new TextComponent("§2[Euphalys] \n§cVous êtes blacklisté ! \n§6Raison : §7" + message + "\n§cVous ne pouvez pas formuler de demande de débanissement. Un blacklist est définitif et sans appel." ));
         return true;
     }
 
