@@ -18,13 +18,17 @@
             <id>bungeecord-repo</id>
             <url>https://oss.sonatype.org/content/repositories/snapshots</url>
         </repository>
+        <repository>
+            <id>bob</id>
+            <url>http://euphalys.net:8081/artifactory/spigot/</url>
+        </repository>
     </repositories>
 
     <dependencies>
         <dependency>
             <groupId>net.euphalys</groupId>
             <artifactId>api</artifactId>
-            <version>0.5.5</version>
+            <version>0.5.4</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -40,25 +44,25 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>spigot</groupId>
-            <artifactId>spigot-1.8.8</artifactId>
-            <version>1.8.8</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/spigot-1.8.8.jar</systemPath>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot</artifactId>
+            <version>1.8.8-R0.1-20190425.090436-1</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>spigot</groupId>
-            <artifactId>spigot-1.12.2</artifactId>
-            <version>1.12.2</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/spigot-1.12.2.jar</systemPath>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot-1.9</artifactId>
+            <version>1.9.4-R0.1-20190425.121648-1</version>
         </dependency>
         <dependency>
-            <groupId>spigot</groupId>
-            <artifactId>spigot-1.13.2</artifactId>
-            <version>1.13.2</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/spigot-1.13.2.jar</systemPath>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot-1.12</artifactId>
+            <version>1.12.2-R0.1-20190425.123314-1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot-1.13</artifactId>
+            <version>1.13.2-R0.1-20190425.124340-1</version>
         </dependency>
         <dependency>
             <groupId>fr.dinnerwolph</groupId>
