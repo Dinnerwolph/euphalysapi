@@ -286,4 +286,11 @@ public class EuphalysApi extends JavaPlugin implements IEuphalysPlugin {
             return new NickUtils1_13_R2();
         return null;
     }
+
+    public boolean is1_14() {
+        String version = Bukkit.getBukkitVersion();
+        if(version.contains("1.14"))
+            return true;
+        return false;
+    }
 }
