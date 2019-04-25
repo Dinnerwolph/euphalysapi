@@ -18,8 +18,8 @@ import java.util.Random;
 
 public class HubCommands extends Command {
 
-    private final int version[] = {47, 110, 340, 404};
-    private final String server[] = {"Hub1-8", "Hub1-9", "Hub1-12", "Hub1-13"};
+    private final int version[] = {47, 110, 340, 404, 477};
+    private final String server[] = {"Hub1-8", "Hub1-9", "Hub1-12", "Hub1-13", "Hub1-14"};
 
     public HubCommands() {
         super("hub", "", "lobby");

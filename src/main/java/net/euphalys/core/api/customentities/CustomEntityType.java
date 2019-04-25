@@ -12,8 +12,8 @@ import java.util.Map;
  */
 
 public enum CustomEntityType {
-
-    VILLAGER("Villager", 120, EntityType.VILLAGER, EntityVillager.class, CustomVillager.class);
+;
+    //VILLAGER("Villager", 120, EntityType.VILLAGER, EntityVillager.class, CustomVillager.class);
 
     private String name;
     private int id;

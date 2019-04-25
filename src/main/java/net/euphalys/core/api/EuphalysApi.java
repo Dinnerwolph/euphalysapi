@@ -28,10 +28,7 @@ import net.euphalys.core.api.player.OfflineEuphalysPlayer;
 import net.euphalys.core.api.player.PlayerManager;
 import net.euphalys.core.api.report.ReportManager;
 import net.euphalys.core.api.sanctions.SanctionsManager;
-import net.euphalys.core.api.utils.ScoreboardSign1_12_R1;
-import net.euphalys.core.api.utils.ScoreboardSign1_13_R2;
-import net.euphalys.core.api.utils.ScoreboardSign1_8_R3;
-import net.euphalys.core.api.utils.ScoreboardSign1_9_R2;
+import net.euphalys.core.api.utils.*;
 import net.euphalys.core.api.utils.nick.*;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -256,7 +253,9 @@ public class EuphalysApi extends JavaPlugin implements IEuphalysPlugin {
             return new ScoreboardSign1_12_R1(player, objectiveName);
         else if (version.contains("1.13.2"))
             return new ScoreboardSign1_13_R2(player, objectiveName);
-        return null;
+        else if(version.contains("1.14"))
+            return new ScoreboardSign1_14_R1(player, objectiveName);
+        throw new UnsupportedOperationException("Unsupported version");
     }
 
     public void sendToHub(Player player) {
