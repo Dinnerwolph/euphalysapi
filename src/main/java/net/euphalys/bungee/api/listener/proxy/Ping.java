@@ -14,8 +14,7 @@ public class Ping implements Listener {
 
     @EventHandler
     public void onProxyPingEvent(ProxyPingEvent event) {
-        //TODO empecher la 1.8
         event.getResponse().setVersion(new ServerPing.Protocol("Serveur en maintenance", -1));
-        event.getResponse().setDescriptionComponent(new TextComponent("       §2--§9 Projet EpyCube §2•§b [1.8 - 1.13] §2--       \n              §2Ouverture Prochaine !"));
+        event.getResponse().setDescriptionComponent(new TextComponent("       §2--§9 Projet EpyCube §2•§b [1.8 - 1.14] §2--       \n              §2Ouverture Prochaine !"));
     }
 }

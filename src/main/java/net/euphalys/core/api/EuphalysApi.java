@@ -284,6 +284,8 @@ public class EuphalysApi extends JavaPlugin implements IEuphalysPlugin {
             return new NickUtils1_12_R1();
         else if (version.contains("1.13.2"))
             return new NickUtils1_13_R2();
+        else if(version.contains("1.14"))
+            return new NickUtils1_14_R1();
         return null;
     }
 

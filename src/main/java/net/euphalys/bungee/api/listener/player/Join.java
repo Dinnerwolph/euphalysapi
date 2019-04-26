@@ -69,7 +69,7 @@ public class Join implements Listener {
                 }
             } else if (sanction.getType().equals(SanctionsType.BLACKLIST)) {
                 event.setCancelled(true);
-                player.disconnect(new TextComponent("\"§2[Euphalys] \\n§cVous êtes blacklisté ! \\n§6Raison : §7\" + message + \"\\n§cVous ne pouvez pas formuler de demande de débanissement. Un blacklist est définitif et sans appel.\" "));
+                player.disconnect(new TextComponent("§2[Euphalys] \n§cVous êtes blacklisté ! \n§6Raison : §7" + sanction.getMessage() + "\n§cVous ne pouvez pas formuler de demande de débanissement. Un blacklist est définitif et sans appel."));
                 return;
             }
         }
