@@ -52,7 +52,7 @@ public class Join implements Listener {
                 }
                 if (sanction.getServer().equalsIgnoreCase("global")) {
                     event.setCancelled(true);
-                    player.disconnect(new TextComponent("Vous êtes bannis du serveur"));
+                    player.disconnect(new TextComponent("§2[Euphalys] \n§cVous avez été banni définitivement. \n§6Raison : §7" + sanction.getMessage() + "\n§6Expiration : §7Banissement définitif\n\n\n§7Si vous souhaitez être débanni, nous vous laissons faire une demande de débanissement sur notre site. \nhttps://unban.euphalys.net/"));
                     return;
                 }
             } else if (sanction.getType().equals(SanctionsType.BANIP)) {
@@ -69,7 +69,7 @@ public class Join implements Listener {
                 }
             } else if (sanction.getType().equals(SanctionsType.BLACKLIST)) {
                 event.setCancelled(true);
-                player.disconnect(new TextComponent("§2[Euphalys] \n§cVous êtes blacklisté ! \n§6Raison : §7" + sanction.getMessage() + "\n§cVous ne pouvez pas formuler de demande de débanissement. Un blacklist est définitif et sans appel."));
+                player.disconnect(new TextComponent("§2[Euphalys] \n§cVous êtes blacklisté ! \n\n§6Raison : §7" + sanction.getMessage() + "\n\n\n§7Vous ne pouvez pas formuler de demande de débanissement. Un blacklist est définitif et sans appel."));
                 return;
             }
         }

@@ -23,7 +23,7 @@ public class BanCommands extends AbstractSanctions {
         Euphalys.getInstance().getSanctionsManager().addGlobalSanction(Euphalys.getInstance().getPlayer(target), SanctionsType.BAN, 0, message, player);
         ProxiedPlayer proxiedPlayer = Euphalys.getInstance().getProxy().getPlayer(target);
         if (proxiedPlayer != null)
-            proxiedPlayer.disconnect("Vous êtes bannis.");
+            proxiedPlayer.disconnect("§2[Euphalys] \n§cVous avez été banni définitivement. \n§6Raison : §7" + message + "\n§6Expiration : §7Banissement définitif\n\n\n§7Si vous souhaitez être débanni, nous vous laissons faire une demande de débanissement sur notre site. \nhttps://unban.euphalys.net/");
         return true;
     }
 

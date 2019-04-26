@@ -13,7 +13,7 @@ import java.util.UUID;
 public class RankCommands extends Command {
 
     public RankCommands() {
-        super("rank", "");
+        super("rank", "euphalys.manager.rank");
     }
 
     @Override
