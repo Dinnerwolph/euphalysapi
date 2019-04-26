@@ -25,8 +25,8 @@ import java.util.Random;
 public class Join implements Listener {
 
     private final Euphalys plugin;
-    private final int version[] = {47, 110, 340, 404, 477};
-    private final String server[] = {"Hub1-8", "Hub1-9", "Hub1-12", "Hub1-13", "Hub1-14"};
+    private final int version[] = {47, 110, 340, 477};
+    private final String server[] = {"Hub1-8", "Hub1-9", "Hub1-12", "Hub1-14"};
 
     public Join(Euphalys plugin) {
         this.plugin = plugin;
