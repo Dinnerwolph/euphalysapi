@@ -251,8 +251,6 @@ public class EuphalysApi extends JavaPlugin implements IEuphalysPlugin {
             return new ScoreboardSign1_9_R2(player, objectiveName);
         else if (version.contains("1.12.2"))
             return new ScoreboardSign1_12_R1(player, objectiveName);
-        else if (version.contains("1.13.2"))
-            return new ScoreboardSign1_13_R2(player, objectiveName);
         else if(version.contains("1.14"))
             return new ScoreboardSign1_14_R1(player, objectiveName);
         throw new UnsupportedOperationException("Unsupported version");
@@ -282,11 +280,9 @@ public class EuphalysApi extends JavaPlugin implements IEuphalysPlugin {
             return new NickUtils1_9_R2();
         else if (version.contains("1.12.2"))
             return new NickUtils1_12_R1();
-        else if (version.contains("1.13.2"))
-            return new NickUtils1_13_R2();
         else if(version.contains("1.14"))
             return new NickUtils1_14_R1();
-        return null;
+        throw new UnsupportedOperationException("Unsupported version");
     }
 
     public boolean is1_14() {
