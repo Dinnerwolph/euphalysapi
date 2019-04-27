@@ -7,6 +7,7 @@ import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.CraftingInventory;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -23,6 +24,7 @@ public class Click implements Listener {
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
         if (event.getCurrentItem() == null) return;
+        if (event.getInventory() instanceof CraftingInventory) return;
         String name = event.getInventory().getName();
         if (name.contains("sanctions #")) {
             ItemStack itemStack = event.getCurrentItem();
@@ -32,7 +34,7 @@ public class Click implements Listener {
                 EuphalysApi.getInstance().getSanctionsManager().removesanction(id);
                 UUID target = EuphalysApi.getInstance().getUUUIDTranslator().getUUID(name.split(" ")[2]);
                 IEuphalysPlayer targetplayer = EuphalysApi.getInstance().getPlayer(target);
-                Inventory inventory = Bukkit.createInventory(event.getWhoClicked(), 9*6, name.split(" ")[2] + " sanctions");
+                Inventory inventory = Bukkit.createInventory(event.getWhoClicked(), 9 * 6, name.split(" ")[2] + " sanctions");
                 targetplayer.getSanctions().forEach(sanctions -> {
                     ItemStack item = new ItemStack(Material.PAPER);
                     ItemMeta itemMeta = item.getItemMeta();
@@ -45,7 +47,7 @@ public class Click implements Listener {
             } else if (itemStack.getItemMeta().getDisplayName().equalsIgnoreCase("Annulé")) {
                 UUID target = EuphalysApi.getInstance().getUUUIDTranslator().getUUID(name.split(" ")[2]);
                 IEuphalysPlayer targetplayer = EuphalysApi.getInstance().getPlayer(target);
-                Inventory inventory = Bukkit.createInventory(event.getWhoClicked(), 9*6, name.split(" ")[2] + " sanctions");
+                Inventory inventory = Bukkit.createInventory(event.getWhoClicked(), 9 * 6, name.split(" ")[2] + " sanctions");
                 targetplayer.getSanctions().forEach(sanctions -> {
                     ItemStack item = new ItemStack(Material.PAPER);
                     ItemMeta itemMeta = item.getItemMeta();
