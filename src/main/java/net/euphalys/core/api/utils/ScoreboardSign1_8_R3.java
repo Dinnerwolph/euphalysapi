@@ -1,9 +1,13 @@
 package net.euphalys.core.api.utils;
 
 import net.euphalys.api.utils.IScoreboardSign;
+import net.euphalys.core.api.EuphalysApi;
 import net.minecraft.server.v1_8_R3.*;
+import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -17,6 +21,7 @@ public class ScoreboardSign1_8_R3 implements IScoreboardSign {
     private final VirtualTeam[] lines = new VirtualTeam[15];
     private final Player player;
     private String objectiveName;
+    private BukkitTask task;
 
     /**
      * Create a scoreboard sign for a given player and using a specifig objective name
@@ -26,6 +31,7 @@ public class ScoreboardSign1_8_R3 implements IScoreboardSign {
     public ScoreboardSign1_8_R3(Player player, String objectiveName) {
         this.player = player;
         this.objectiveName = objectiveName;
+        task = new LastLine().runTaskTimer(EuphalysApi.getInstance(), 15 * 20, 15 * 20);
     }
 
     /**
@@ -43,6 +49,7 @@ public class ScoreboardSign1_8_R3 implements IScoreboardSign {
             sendLine(i++);
 
         created = true;
+        setLine(14, "§7⋙ §bplay.euphalys.net");
     }
 
     /**
@@ -52,7 +59,7 @@ public class ScoreboardSign1_8_R3 implements IScoreboardSign {
     public void destroy() {
         if (!created)
             return;
-
+        Bukkit.getScheduler().cancelTask(task.getTaskId());
         getPlayer().sendPacket(createObjectivePacket(1, null));
         for (VirtualTeam team : lines)
             if (team != null)
@@ -366,6 +373,31 @@ public class ScoreboardSign1_8_R3 implements IScoreboardSign {
             field.set(edit, value);
         } catch (NoSuchFieldException | IllegalAccessException e) {
             e.printStackTrace();
+        }
+    }
+
+    private class LastLine extends BukkitRunnable {
+        private final String line[] = {"§7⋙ §bplay.euphalys.net", "§7⋙ §9p§blay.euphalys.net", "§7⋙ §bp§9l§bay.euphalys.net",
+                "§7⋙ §bpl§9a§by.euphalys.net", "§7⋙ §bpla§9y§b.euphalys.net", "§7⋙ §bplay§9.§beuphalys.net",
+                "§7⋙ §bplay.§9e§buphalys.net", "§7⋙ §bplay.e§9u§bphalys.net", "§7⋙ §bplay.eu§9p§bhalys.net",
+                "§7⋙ §bplay.eup§9h§balys.net", "§7⋙ §bplay.euph§9a§blys.net", "§7⋙ §bplay.eupha§9l§bys.net",
+                "§7⋙ §bplay.euphal§9y§s.net", "§7⋙ §bplay.euphaly§9s§.net", "§7⋙ §bplay.euphalys§9.§bnet",
+                "§7⋙ §bplay.euphalys.§9n§bet", "§7⋙ §bplay.euphalys.n§9e§bt", "§7⋙ §bplay.euphalys.ne§9t", "§7⋙ §bplay.euphalys.net"};
+        int i = 0;
+
+        @Override
+        public void run() {
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    setLine(14, line[i++]);
+                    if (i >= line.length) {
+                        this.cancel();
+                        i = 0;
+
+                    }
+                }
+            }.runTaskTimer(EuphalysApi.getInstance(), 5L, 5L);
         }
     }
 }

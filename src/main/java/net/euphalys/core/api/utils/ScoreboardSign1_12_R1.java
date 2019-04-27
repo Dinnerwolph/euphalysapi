@@ -51,7 +51,7 @@ public class ScoreboardSign1_12_R1 implements IScoreboardSign {
             sendLine(i++);
 
         created = true;
-        setLine(14, "§7⋙ §bplay.epycube.fr");
+        setLine(14, "§7⋙ §bplay.euphalys.net");
     }
 
     /**
