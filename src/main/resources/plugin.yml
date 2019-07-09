@@ -38,3 +38,4 @@ commands:
   group:
     description: Commande administrative concernant les groupes utilisateurs
   nick:
+  cl:

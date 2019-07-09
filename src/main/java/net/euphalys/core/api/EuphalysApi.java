@@ -6,6 +6,7 @@ import fr.dinnerwolph.otl.bukkit.BukkitOTL;
 import io.netty.channel.ChannelHandlerContext;
 import net.euphalys.api.database.IDatabaseManager;
 import net.euphalys.api.friends.IFriendsManager;
+import net.euphalys.api.module.IModuleHandler;
 import net.euphalys.api.names.IUUIDTranslator;
 import net.euphalys.api.otl.GameState;
 import net.euphalys.api.player.IEuphalysPlayer;
@@ -19,16 +20,20 @@ import net.euphalys.core.api.commands.*;
 import net.euphalys.core.api.commands.chat.ClearChatCommands;
 import net.euphalys.core.api.commands.chat.CloseChatCommands;
 import net.euphalys.core.api.commands.chat.OpenChatCommands;
-import net.euphalys.core.api.customentities.CustomEntityType;
 import net.euphalys.core.api.database.SQLDatabaseManager;
 import net.euphalys.core.api.friends.FriendsManager;
 import net.euphalys.core.api.listener.ListenerManager;
+import net.euphalys.core.api.module.ModuleHandler;
 import net.euphalys.core.api.names.UUIDTranslator;
 import net.euphalys.core.api.player.OfflineEuphalysPlayer;
 import net.euphalys.core.api.player.PlayerManager;
+import net.euphalys.core.api.player.RankModule;
 import net.euphalys.core.api.report.ReportManager;
 import net.euphalys.core.api.sanctions.SanctionsManager;
-import net.euphalys.core.api.utils.*;
+import net.euphalys.core.api.utils.ScoreboardSign1_12_R1;
+import net.euphalys.core.api.utils.ScoreboardSign1_14_R1;
+import net.euphalys.core.api.utils.ScoreboardSign1_8_R3;
+import net.euphalys.core.api.utils.ScoreboardSign1_9_R2;
 import net.euphalys.core.api.utils.nick.*;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -53,6 +58,7 @@ public class EuphalysApi extends JavaPlugin implements IEuphalysPlugin {
     private boolean hasRankInTabList = true;
     private IReportManager reportManager;
     private GameState gameState;
+    private IModuleHandler moduleHandler;
 
     public boolean hasChat = true;
     public List<UUID> freezeList = new ArrayList<>();
@@ -86,6 +92,10 @@ public class EuphalysApi extends JavaPlugin implements IEuphalysPlugin {
         registerCommands();
         playerManager.loadAllGroup();
         cpstask();
+        this.moduleHandler = new ModuleHandler();
+        moduleHandler.registerInLibrary(new RankModule());
+        moduleHandler.register("rank");
+        moduleHandler.enableModuleRegistered("rank");
     }
 
     @Override
@@ -206,7 +216,7 @@ public class EuphalysApi extends JavaPlugin implements IEuphalysPlugin {
         new InfoReportCommands();
         new GroupCommands();
         new NickCommands();
-
+        new CLCommands();
     }
 
     private void cpstask() {
@@ -251,7 +261,7 @@ public class EuphalysApi extends JavaPlugin implements IEuphalysPlugin {
             return new ScoreboardSign1_9_R2(player, objectiveName);
         else if (version.contains("1.12.2"))
             return new ScoreboardSign1_12_R1(player, objectiveName);
-        else if(version.contains("1.14"))
+        else if (version.contains("1.14"))
             return new ScoreboardSign1_14_R1(player, objectiveName);
         throw new UnsupportedOperationException("Unsupported version");
     }
@@ -280,14 +290,14 @@ public class EuphalysApi extends JavaPlugin implements IEuphalysPlugin {
             return new NickUtils1_9_R2();
         else if (version.contains("1.12.2"))
             return new NickUtils1_12_R1();
-        else if(version.contains("1.14"))
+        else if (version.contains("1.14"))
             return new NickUtils1_14_R1();
         throw new UnsupportedOperationException("Unsupported version");
     }
 
     public boolean is1_14() {
         String version = Bukkit.getBukkitVersion();
-        if(version.contains("1.14"))
+        if (version.contains("1.14"))
             return true;
         return false;
     }
