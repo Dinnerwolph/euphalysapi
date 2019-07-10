@@ -24,10 +24,12 @@ public class VanishCommands extends AbstractCommands {
                 for (Player players : Bukkit.getOnlinePlayers())
                     players.showPlayer(player);
                 api.getPlayerManager().setVanish(azoplayer.getEuphalysId(), 0);
+                player.sendMessage("§6 Vous êtes de nouveau visible. Vous vous déplacez tel un ours qui se réveille :o");
             } else {
                 for (Player players : Bukkit.getOnlinePlayers())
                     players.hidePlayer(player);
                 api.getPlayerManager().setVanish(azoplayer.getEuphalysId(), 1);
+                player.sendMessage("§6 Vous vous déplacez désormais tel un renard furtif. Tachez de ne pas vous faire repérer");
             }
         }
         return true;
