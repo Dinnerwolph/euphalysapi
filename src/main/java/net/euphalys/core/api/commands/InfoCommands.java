@@ -31,8 +31,8 @@ public class InfoCommands extends AbstractCommands {
         targetplayer.getSanctions().forEach(sanctions -> {
             ItemStack itemStack = new ItemStack(Material.PAPER);
             ItemMeta itemMeta = itemStack.getItemMeta();
-            itemMeta.setDisplayName("#" + sanctions.getSanctionsId());
-            itemMeta.setLore(Arrays.asList(sanctions.getType().name, sanctions.getServer(), sanctions.getDuration() + "", sanctions.getMessage()));
+            itemMeta.setDisplayName("§cSanction n° §a#" + sanctions.getSanctionsId());
+            itemMeta.setLore(Arrays.asList("§cType §a: " + sanctions.getType().name, "§cServeur §a: " + sanctions.getServer(), "§cDurée §a: " + sanctions.getDuration() + "", "§cRaison §a: " + sanctions.getMessage()));
             itemStack.setItemMeta(itemMeta);
             inventory.addItem(itemStack);
         });
