@@ -15,19 +15,19 @@ public class SALCommands extends AbstractCommands {
     @Override
     protected boolean onCommand(Player player, String[] args) {
         if (args.length < 1) {
-            player.sendMessage("/sal <message>");
+            player.sendMessage("§cUsage : /sal <message>");
             return false;
         } else {
             String message = "";
             for (int i = 0; i < args.length; i++)
                 message = message + args[i] + " ";
-            Bukkit.broadcastMessage("[Annonce staff] " + message.replaceAll("&", "§"));
+            Bukkit.broadcastMessage("§3[Annonce Staff] §r" + message.replaceAll("&", "§"));
         }
         return true;
     }
 
     @Override
     protected void displayHelp() {
-        player.sendMessage("/sal <message>");
+        player.sendMessage("§cUsage : /sal <message>");
     }
 }
