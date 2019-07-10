@@ -217,6 +217,8 @@ public class EuphalysApi extends JavaPlugin implements IEuphalysPlugin {
         new GroupCommands();
         new NickCommands();
         new CLCommands();
+        new SALCommands();
+        new AALCommands();
     }
 
     private void cpstask() {

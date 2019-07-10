@@ -29,7 +29,7 @@ public class CISCommand extends Command {
                 commandSender.sendMessage(new TextComponent("choix du salon modo ou admin."));
                 return;
             }
-            Euphalys.getInstance().getProxy().broadcast(new TextComponent("[Convocation] >> " + args[0] + ", tu est convoqué sur Teamspeak (ts.euphalys.net). Merci de te présenter dans le channel \"Attente Staff ➜ " + salon + "\""));
+            Euphalys.getInstance().getProxy().broadcast(new TextComponent("§e[Convocation] >> §c" + args[0] + "§e, tu est convoqué sur Teamspeak (§cts.euphalys.net§e). Merci de te présenter dans le channel \"§cAttente Staff ➜ " + salon + "§e\""));
         }
     }
 }

@@ -25,7 +25,7 @@ public class CLCommands extends AbstractCommands {
             player.sendMessage("choix du salon modo ou admin.");
             return true;
         }
-        Bukkit.broadcastMessage("[Convocation] >> " + args[0] + ", tu est convoqué sur Teamspeak (ts.euphalys.net). Merci de te présenter dans le channel \"Attente Staff ➜ " + salon + "\"");
+        Bukkit.broadcastMessage("§e[Convocation] >> §c" + args[0] + "§e, tu est convoqué sur Teamspeak (§cts.euphalys.net§e). Merci de te présenter dans le channel \"§cAttente Staff ➜ " + salon + "§e\"");
         return true;
     }
 
