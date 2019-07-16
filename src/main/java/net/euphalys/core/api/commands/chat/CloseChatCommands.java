@@ -18,7 +18,7 @@ public class CloseChatCommands extends AbstractCommands {
     protected boolean onCommand(Player player, String[] args) {
         EuphalysApi.getInstance().hasChat = false;
         player.sendMessage("Le chat est maintenant fermé.");
-        Bukkit.broadcastMessage(player.getName() + " viens de fermer le chat. :(");
+        Bukkit.broadcastMessage("§cUn membre du Staff (§4" + player.getName() + "§c) viens de fermer le chat. Vous ne pouvez plus parler.");
         return true;
     }
 
