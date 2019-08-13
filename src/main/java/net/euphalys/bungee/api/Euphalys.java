@@ -27,9 +27,9 @@ import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
 
 import java.io.*;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Dinnerwolph
@@ -38,34 +38,20 @@ import java.util.UUID;
 public class Euphalys extends Plugin implements IEuphalysPlugin {
 
     private static Euphalys instance;
-    Configuration configuration = null;
+    private Configuration configuration = null;
     private IDatabaseManager databaseManager;
     private IPlayerManager playerManager;
     private ISanctionsManager sanctionsManager;
     private IReportManager reportManager;
     private IFriendsManager friendsManager;
     private IUUIDTranslator uuidTranslator;
-    private Map<Integer, IGroup> groupMap = new HashMap();
-    private Map<UUID, IEuphalysPlayer> playerMap = new HashMap();
+    private Map<Integer, IGroup> groupMap = new ConcurrentHashMap<>();
+    private Map<UUID, IEuphalysPlayer> playerMap = new ConcurrentHashMap<>();
+    private boolean maintenance;
 
     @Override
     public void onEnable() {
         instance = this;
-        new ListenerManager();
-        getProxy().getPluginManager().registerCommand(this, new GRTpCommands());
-        getProxy().getPluginManager().registerCommand(this, new SeeModsCommands());
-        getProxy().getPluginManager().registerCommand(this, new HubCommands());
-        getProxy().getPluginManager().registerCommand(this, new ReportCommands());
-        getProxy().getPluginManager().registerCommand(this, new ServerCommands());
-        getProxy().getPluginManager().registerCommand(this, new BanCommands());
-        getProxy().getPluginManager().registerCommand(this, new BanIpCommands());
-        getProxy().getPluginManager().registerCommand(this, new MuteCommands());
-        getProxy().getPluginManager().registerCommand(this, new TempMuteCommands());
-        getProxy().getPluginManager().registerCommand(this, new TempBanCommands());
-        getProxy().getPluginManager().registerCommand(this, new RankCommands());
-        getProxy().getPluginManager().registerCommand(this, new CISCommand());
-        getProxy().getPluginManager().registerCommand(this, new AAISCommand());
-        getProxy().getPluginManager().registerCommand(this, new SAISCommand());
         if (!getDataFolder().exists()) {
             getDataFolder().mkdir();
         }
@@ -95,13 +81,30 @@ public class Euphalys extends Plugin implements IEuphalysPlugin {
             String password = configuration.getString("bdd.sql.password", "password");
             this.databaseManager = new SQLDatabaseManager("jdbc:mysql://" + host + ":" + port + "/" + database, username, password, 2, 20);
         }
-
+        this.maintenance = configuration.getBoolean("maintenance");
         this.playerManager = new PlayerManager(instance);
-        playerManager.loadAllGroup();
+        this.playerManager.loadAllGroup();
         this.sanctionsManager = new SanctionsManager(databaseManager.getDataSource(), instance);
         this.reportManager = new ReportManager(databaseManager.getDataSource(), instance);
         this.friendsManager = new FriendsManager(instance);
         this.uuidTranslator = new UUIDTranslator(instance);
+        new ListenerManager(configuration);
+        getProxy().getPluginManager().registerCommand(this, new GRTpCommands());
+        getProxy().getPluginManager().registerCommand(this, new SeeModsCommands());
+        getProxy().getPluginManager().registerCommand(this, new HubCommands());
+        getProxy().getPluginManager().registerCommand(this, new ReportCommands());
+        getProxy().getPluginManager().registerCommand(this, new ServerCommands());
+        getProxy().getPluginManager().registerCommand(this, new BanCommands());
+        getProxy().getPluginManager().registerCommand(this, new BanIpCommands());
+        getProxy().getPluginManager().registerCommand(this, new MuteCommands());
+        getProxy().getPluginManager().registerCommand(this, new TempMuteCommands());
+        getProxy().getPluginManager().registerCommand(this, new TempBanCommands());
+        getProxy().getPluginManager().registerCommand(this, new RankCommands());
+        getProxy().getPluginManager().registerCommand(this, new CISCommand());
+        getProxy().getPluginManager().registerCommand(this, new AAISCommand());
+        getProxy().getPluginManager().registerCommand(this, new SAISCommand());
+        getProxy().getPluginManager().registerCommand(this, new GkickCommands());
+        getProxy().getPluginManager().registerCommand(this, new MaintenanceCommand());
     }
 
     public static Euphalys getInstance() {
@@ -185,5 +188,13 @@ public class Euphalys extends Plugin implements IEuphalysPlugin {
     @Override
     public void sendToServer(String server, UUID uuid) {
         getProxy().getPlayer(uuid).connect(getProxy().getServerInfo(server));
+    }
+
+    public boolean isMaintenance() {
+        return maintenance;
+    }
+
+    public void setMaintenance(boolean maintenance) {
+        this.maintenance = maintenance;
     }
 }

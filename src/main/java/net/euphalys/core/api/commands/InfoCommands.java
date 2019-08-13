@@ -3,19 +3,21 @@ package net.euphalys.core.api.commands;
 import net.euphalys.api.player.IEuphalysPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Arrays;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * @author Dinnerwolph
  */
 
-public class InfoCommands extends AbstractCommands {
+public class InfoCommands extends AbstractCommands implements TabExecutor {
 
     public InfoCommands() {
         super("info", "euphalys.cmd.info");
@@ -42,5 +44,18 @@ public class InfoCommands extends AbstractCommands {
 
     protected void displayHelp() {
         player.sendMessage("/info <player>");
+    }
+
+    @Override
+    public List<String> onTabComplete(CommandSender commandSender, Command command, String s, String[] args) {
+        List<String> matches = new ArrayList();
+        if (args.length == 1) {
+            String search = args[0].toLowerCase(Locale.ROOT);
+            Bukkit.getOnlinePlayers().forEach(player -> {
+                if (player.getName().toLowerCase(Locale.ROOT).startsWith(search))
+                    matches.add(player.getName());
+            });
+        }
+        return matches;
     }
 }

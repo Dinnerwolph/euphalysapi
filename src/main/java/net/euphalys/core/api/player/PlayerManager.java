@@ -52,6 +52,7 @@ public class PlayerManager implements IPlayerManager {
             statement.setString(1, name);
             statement.setInt(2, id);
             statement.executeUpdate();
+            connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -180,7 +181,7 @@ public class PlayerManager implements IPlayerManager {
         List<String> permissions = new ArrayList();
         try {
             Connection connection = dataSource.getConnection();
-            PreparedStatement statement = connection.prepareStatement("SELECT `permission` FROM `permissions` WHERE `id`=?");
+            PreparedStatement statement = connection.prepareStatement("SELECT `permission` FROM `permissions` WHERE `groupid`=?");
             statement.setInt(1, euphaId);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next())
@@ -380,6 +381,7 @@ public class PlayerManager implements IPlayerManager {
             statement.setInt(1, rankId);
             statement.setInt(2, id);
             statement.executeUpdate();
+            connection.close();
         } catch (Exception e) {
             e.printStackTrace();
         }

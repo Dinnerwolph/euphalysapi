@@ -1,6 +1,5 @@
 package net.euphalys.bungee.api.commands;
 
-import net.euphalys.api.player.IEuphalysPlayer;
 import net.euphalys.bungee.api.Euphalys;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.config.ServerInfo;
@@ -18,18 +17,16 @@ import java.util.Random;
 
 public class HubCommands extends Command {
 
-    private final int version[] = {47, 110, 340, 490};
+    private final int version[] = {47, 110, 340, 498};
     private final String server[] = {"Hub1-8", "Hub1-9", "Hub1-12", "Hub1-14"};
 
     public HubCommands() {
-        super("hub", "", "lobby");
+        super("hub", "euphalys.cmd.hub", "lobby");
     }
 
     @Override
     public void execute(CommandSender commandSender, String[] args) {
         if (commandSender instanceof ProxiedPlayer) {
-            IEuphalysPlayer player = Euphalys.getInstance().getPlayer(((ProxiedPlayer) commandSender).getUniqueId());
-            if (player.hasPermission("euphalys.cmd.hub")) {
                 if (args.length < 1) {
                     ((ProxiedPlayer) commandSender).connect(getRandomHub(((ProxiedPlayer) commandSender).getPendingConnection().getVersion()));
                     return;
@@ -40,7 +37,6 @@ public class HubCommands extends Command {
                     return;
                 }
                 target.connect(getRandomHub(target.getPendingConnection().getVersion()));
-            }
         }
     }
 

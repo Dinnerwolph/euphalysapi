@@ -14,14 +14,12 @@ import net.md_5.bungee.api.plugin.Command;
 public class SeeModsCommands extends Command {
 
     public SeeModsCommands() {
-        super("seemods");
+        super("seemods", "euphalys.cmd.seemods");
     }
 
     @Override
     public void execute(CommandSender commandSender, String[] args) {
         if (commandSender instanceof ProxiedPlayer) {
-            IEuphalysPlayer player = Euphalys.getInstance().getPlayer(((ProxiedPlayer) commandSender).getUniqueId());
-            if (player.hasPermission("euphalys.cmd.seemods")) {
                 if (args.length < 1) {
                     commandSender.sendMessage("§cSynthaxe : /seemods <joueur>");
                     return;
@@ -37,9 +35,9 @@ public class SeeModsCommands extends Command {
                 }
                 for (String mods : target.getModList().keySet())
                     commandSender.sendMessage(new TextComponent("§6Mods pour le joueur" + target.getDisplayName() + ":" + mods + " " + target.getModList().get(mods)));
-            } else {
+            /**} else {
                 commandSender.sendMessage("§cErreur : Vous n'avez pas la permission d'effectuer cette commande {euphalys.cmd.seemods");
-            }
+            }*/
         }
     }
 

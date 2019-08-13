@@ -1,13 +1,20 @@
 package net.euphalys.core.api.commands;
 
 import org.bukkit.Bukkit;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * @author Dinnerwolph
  */
 
-public class FreezeCommands extends AbstractCommands {
+public class FreezeCommands extends AbstractCommands implements TabExecutor {
 
     public FreezeCommands() {
         super("freeze", "euphalys.cmd.freeze");
@@ -33,5 +40,18 @@ public class FreezeCommands extends AbstractCommands {
     @Override
     protected void displayHelp() {
         player.sendMessage("§cUsage : /freeze <player>");
+    }
+
+    @Override
+    public List<String> onTabComplete(CommandSender commandSender, Command command, String s, String[] args) {
+        List<String> matches = new ArrayList();
+        if (args.length == 1) {
+            String search = args[0].toLowerCase(Locale.ROOT);
+            Bukkit.getOnlinePlayers().forEach(player -> {
+                if (player.getName().toLowerCase(Locale.ROOT).startsWith(search))
+                    matches.add(player.getName());
+            });
+        }
+        return matches;
     }
 }

@@ -6,6 +6,7 @@ import net.euphalys.api.player.IPlayerManager;
 import net.euphalys.api.plugin.IEuphalysPlugin;
 import net.euphalys.api.sanctions.ISanctions;
 import net.euphalys.core.api.EuphalysApi;
+import net.euphalys.core.api.database.SQLDatabaseManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,46 +19,46 @@ import java.util.UUID;
 public class EuphalysPlayer implements IEuphalysPlayer {
 
     private final IEuphalysPlugin api;
-    private final IPlayerManager playerManager;
     private final UUID uuid;
     private final String name;
+    private IGroup realGroup;
     private final int euphalysId;
     private String lastAddress;
     private IGroup group;
-    private List<String> friends = new ArrayList();
-    private List<ISanctions> sanctions = new ArrayList();
-    private List<String> permissions = new ArrayList();
+    private List<String> friends;
+    private List<ISanctions> sanctions;
+    private final List<String> permissions;
     private boolean vanished;
     private int time_played;
     private long connect;
     private String nickName;
-    private IGroup realGroup;
 
     public EuphalysPlayer(UUID uuid, String name, IEuphalysPlugin api) {
         this.api = api;
-        this.playerManager = api.getPlayerManager();
         this.uuid = uuid;
         this.name = name;
-        if (!playerManager.exist(uuid))
-            playerManager.createUser(uuid, name);
-        this.euphalysId = playerManager.getAzonaryaId(uuid);
-        playerManager.updateUserName(euphalysId, name);
+        this.permissions = new ArrayList();
+
+        if (!api.getPlayerManager().exist(uuid))
+            api.getPlayerManager().createUser(uuid, name);
+        this.euphalysId = api.getPlayerManager().getAzonaryaId(uuid);
+        api.getPlayerManager().updateUserName(euphalysId, name);
         this.load();
     }
 
     private void load() {
-        group = playerManager.getGroup(uuid);
-        realGroup = playerManager.getGroup(uuid);
-        this.lastAddress = playerManager.getLastAddress(uuid);
+        group = api.getPlayerManager().getGroup(uuid);
+        realGroup = api.getGroup(group.getGroupId());
+        this.lastAddress = api.getPlayerManager().getLastAddress(uuid);
         this.sanctions = api.getSanctionsManager().getSanction(this);
         //TODO permissions solo ?
         //this.permissions.addAll(playerManager.getPermissions(euphalysId));
         this.permissions.addAll(group.getPermissions());
-        this.vanished = playerManager.isVanished(euphalysId);
-        this.time_played = playerManager.getTimePlayed(euphalysId);
+        this.vanished = api.getPlayerManager().isVanished(euphalysId);
+        this.time_played = api.getPlayerManager().getTimePlayed(euphalysId);
         this.api.getFriendsManager().loadPlayer(uuid);
         this.friends = this.api.getFriendsManager().namesFriendsList(uuid);
-        this.nickName = playerManager.getNickName(euphalysId);
+        this.nickName = api.getPlayerManager().getNickName(euphalysId);
         connect = System.currentTimeMillis();
     }
 
@@ -119,9 +120,15 @@ public class EuphalysPlayer implements IEuphalysPlayer {
     }
 
     @Override
+    public void setVanish(boolean vanish) {
+        this.vanished = vanish;
+        this.api.getPlayerManager().setVanish(getEuphalysId(), vanish ? 1 : 0);
+    }
+
+    @Override
     public void setTimePlayed() {
         time_played += System.currentTimeMillis() - connect;
-        this.playerManager.setTimePlayed(euphalysId, time_played);
+        this.api.getPlayerManager().setTimePlayed(euphalysId, time_played);
     }
 
     @Override
@@ -136,7 +143,7 @@ public class EuphalysPlayer implements IEuphalysPlayer {
 
     @Override
     public void updateFriends() {
-        this.friends = new ArrayList();
+        this.friends.clear();
         this.friends = this.api.getFriendsManager().namesFriendsList(uuid);
     }
 
@@ -167,5 +174,19 @@ public class EuphalysPlayer implements IEuphalysPlayer {
     @Override
     public String getNickName() {
         return nickName.isEmpty() ? name : nickName;
+    }
+
+    @Override
+    public boolean hasNickName() {
+        return !nickName.isEmpty();
+    }
+
+    public void setGroup(IGroup group) {
+        this.group = group;
+    }
+
+    @Override
+    public IGroup getRealGroup() {
+        return realGroup;
     }
 }

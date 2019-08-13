@@ -1,7 +1,6 @@
 package net.euphalys.core.api.commands;
 
 import net.euphalys.core.api.player.EuphalysPlayer;
-import net.euphalys.core.api.utils.RankTabList;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -19,16 +18,12 @@ public class GroupCommands extends AbstractCommands {
     protected boolean onCommand(Player player, String[] args) {
         api.resetGroup();
         api.getPlayerManager().loadAllGroup();
-        api.getServer().getScoreboardManager().getMainScoreboard().getTeams().forEach(team -> {
-            team.unregister();
-        });
-        for (Player players : Bukkit.getOnlinePlayers()) {
+        Bukkit.getOnlinePlayers().forEach(players -> {
             api.removePlayer(players.getUniqueId());
             api.addPlayer(new EuphalysPlayer(players.getUniqueId(), players.getName(), api));
-            if (api.hasRankInTabList()) {
-                RankTabList.updateRank(players);
-            }
-        }
+        });
+        api.moduleHandler.disableModule("rank");
+        api.moduleHandler.enableModuleRegistered("rank");
         return true;
     }
 

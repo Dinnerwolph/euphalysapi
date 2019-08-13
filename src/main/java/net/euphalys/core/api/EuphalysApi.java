@@ -37,11 +37,12 @@ import net.euphalys.core.api.utils.ScoreboardSign1_9_R2;
 import net.euphalys.core.api.utils.nick.*;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.permissions.PermissionAttachment;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scoreboard.Team;
 import org.json.simple.JSONObject;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Dinnerwolph
@@ -55,26 +56,25 @@ public class EuphalysApi extends JavaPlugin implements IEuphalysPlugin {
     private IFriendsManager friendsManager;
     private IPlayerManager playerManager;
     private ISanctionsManager sanctionsManager;
-    private boolean hasRankInTabList = true;
     private IReportManager reportManager;
     private GameState gameState;
-    private IModuleHandler moduleHandler;
+    public IModuleHandler moduleHandler;
 
     public boolean hasChat = true;
     public List<UUID> freezeList = new ArrayList<>();
     public List<UUID> vanishList = new ArrayList();
-    public Map<UUID, Integer> clickList = new HashMap();
-    public Map<UUID, Integer> cps = new HashMap();
+    public Map<UUID, Integer> clickList = new ConcurrentHashMap();
+    public Map<UUID, Integer> cps = new ConcurrentHashMap();
 
-    private Map<Integer, IGroup> groupMap = new HashMap();
-    public Map<UUID, IEuphalysPlayer> playerMap = new HashMap();
+    private Map<Integer, IGroup> groupMap = new ConcurrentHashMap();
+    public Map<UUID, IEuphalysPlayer> playerMap = new ConcurrentHashMap();
+    public Map<UUID, PermissionAttachment> attachmentMap = new ConcurrentHashMap<>();
 
     @Override
     public void onEnable() {
         this.saveDefaultConfig();
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
         instance = this;
-        //CustomEntityType.registerEntities();
         if (getConfig().getString("bdd.type").equalsIgnoreCase("sql")) {
             String host = getConfig().getString("bdd.sql.host", "localhost");
             int port = getConfig().getInt("bdd.sql.port", 3306);
@@ -91,23 +91,15 @@ public class EuphalysApi extends JavaPlugin implements IEuphalysPlugin {
         new ListenerManager();
         registerCommands();
         playerManager.loadAllGroup();
-        cpstask();
+        //cpstask();
         this.moduleHandler = new ModuleHandler();
         moduleHandler.registerInLibrary(new RankModule());
         moduleHandler.register("rank");
-        moduleHandler.enableModuleRegistered("rank");
     }
 
     @Override
     public void onDisable() {
-        //CustomEntityType.unregisterEntities();
-        try {
-            for (Team team : this.getServer().getScoreboardManager().getMainScoreboard().getTeams()) {
-                team.unregister();
-            }
-        } catch (Exception e) {
-
-        }
+        this.moduleHandler.disableAllModules();
     }
 
     public IDatabaseManager getDatabaseManager() {
@@ -175,14 +167,6 @@ public class EuphalysApi extends JavaPlugin implements IEuphalysPlugin {
         return sanctionsManager;
     }
 
-    public boolean hasRankInTabList() {
-        return hasRankInTabList;
-    }
-
-    public void disableRankInTabList() {
-        this.hasRankInTabList = false;
-    }
-
     public static EuphalysApi getInstance() {
         return instance;
     }
@@ -219,6 +203,7 @@ public class EuphalysApi extends JavaPlugin implements IEuphalysPlugin {
         new CLCommands();
         new SALCommands();
         new AALCommands();
+        new DevCommands();
     }
 
     private void cpstask() {
@@ -263,9 +248,9 @@ public class EuphalysApi extends JavaPlugin implements IEuphalysPlugin {
             return new ScoreboardSign1_9_R2(player, objectiveName);
         else if (version.contains("1.12.2"))
             return new ScoreboardSign1_12_R1(player, objectiveName);
-        else if (version.contains("1.14"))
+        else if (version.contains("1.14.4"))
             return new ScoreboardSign1_14_R1(player, objectiveName);
-        throw new UnsupportedOperationException("Unsupported version");
+        throw new UnsupportedOperationException("Unsupported version (" + version + ").");
     }
 
     public void sendToHub(Player player) {
@@ -292,7 +277,7 @@ public class EuphalysApi extends JavaPlugin implements IEuphalysPlugin {
             return new NickUtils1_9_R2();
         else if (version.contains("1.12.2"))
             return new NickUtils1_12_R1();
-        else if (version.contains("1.14"))
+        else if (version.contains("1.14.4"))
             return new NickUtils1_14_R1();
         throw new UnsupportedOperationException("Unsupported version");
     }
@@ -302,5 +287,9 @@ public class EuphalysApi extends JavaPlugin implements IEuphalysPlugin {
         if (version.contains("1.14"))
             return true;
         return false;
+    }
+
+    public IModuleHandler getModuleHandler() {
+        return moduleHandler;
     }
 }

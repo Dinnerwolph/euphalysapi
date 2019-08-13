@@ -18,7 +18,6 @@ public class OfflineEuphalysPlayer implements IEuphalysPlayer {
 
     private final UUID uuid;
     private final IEuphalysPlugin plugin;
-    private final IPlayerManager playerManager;
     private final int epyId;
     private final String name;
     private List<String> permissions = new ArrayList<>();
@@ -26,8 +25,7 @@ public class OfflineEuphalysPlayer implements IEuphalysPlayer {
     public OfflineEuphalysPlayer(UUID uuid, IEuphalysPlugin api) {
         this.uuid = uuid;
         this.plugin = api;
-        this.playerManager = api.getPlayerManager();
-        name = playerManager.getLastName(uuid);
+        name = api.getPlayerManager().getLastName(uuid);
         this.epyId = getEuphalysId();
         //TODO permissions solo ?
         //this.permissions.addAll(playerManager.getPermissions(getEuphalysId()));
@@ -41,12 +39,12 @@ public class OfflineEuphalysPlayer implements IEuphalysPlayer {
 
     @Override
     public Integer getEuphalysId() {
-        return playerManager.getAzonaryaId(uuid);
+        return plugin.getPlayerManager().getAzonaryaId(uuid);
     }
 
     @Override
     public IGroup getGroup() {
-        return playerManager.getGroup(uuid);
+        return plugin.getPlayerManager().getGroup(uuid);
     }
 
     @Override
@@ -78,7 +76,7 @@ public class OfflineEuphalysPlayer implements IEuphalysPlayer {
 
     @Override
     public String getLastAddress() {
-        return playerManager.getLastAddress(uuid);
+        return plugin.getPlayerManager().getLastAddress(uuid);
     }
 
     @Override
@@ -88,7 +86,12 @@ public class OfflineEuphalysPlayer implements IEuphalysPlayer {
 
     @Override
     public boolean isVanished() {
-        return this.plugin.getPlayerManager().isVanished(epyId);
+        return this.plugin.getPlayerManager().isVanished(getEuphalysId());
+    }
+
+    @Override
+    public void setVanish(boolean vanish) {
+        this.plugin.getPlayerManager().setVanish(getEuphalysId(), vanish ? 1 : 0);
     }
 
     @Override
@@ -103,7 +106,7 @@ public class OfflineEuphalysPlayer implements IEuphalysPlayer {
 
     @Override
     public boolean isOnline() {
-        return this.playerManager.isOnline(this.epyId);
+        return this.plugin.getPlayerManager().isOnline(this.epyId);
     }
 
     @Override
@@ -128,11 +131,21 @@ public class OfflineEuphalysPlayer implements IEuphalysPlayer {
 
     @Override
     public void setNickName(String nickName) {
-
+        plugin.getPlayerManager().setNickName(getEuphalysId(), nickName);
     }
 
     @Override
     public String getNickName() {
-        return playerManager.getNickName(getEuphalysId());
+        return plugin.getPlayerManager().getNickName(getEuphalysId());
+    }
+
+    @Override
+    public boolean hasNickName() {
+        return !getNickName().isEmpty();
+    }
+
+    @Override
+    public IGroup getRealGroup() {
+        return getGroup();
     }
 }

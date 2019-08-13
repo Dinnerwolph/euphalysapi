@@ -10,6 +10,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.permissions.Permission;
+import org.bukkit.permissions.PermissionAttachment;
 
 import java.util.UUID;
 
@@ -27,21 +29,43 @@ public class Join implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerJoin(PlayerJoinEvent event) {
-        IEuphalysPlayer player = new EuphalysPlayer(event.getPlayer().getUniqueId(), event.getPlayer().getName(), api);
+        Player p = event.getPlayer();
+        IEuphalysPlayer player = new EuphalysPlayer(p.getUniqueId(), p.getName(), api);
         api.addPlayer(player);
         api.getFriendsManager().loadPlayer(event.getPlayer().getUniqueId());
-        if (api.hasRankInTabList())
-            RankTabList.updateRank(event.getPlayer());
+
+        /**
+         * Nick
+         */
+        if (!player.getNickName().isEmpty()) {
+            EuphalysApi.getInstance().getNickUtils().setNickName(p, player.getNickName());
+            player.setNickName(player.getNickName());
+        }
+
+        /**
+         * Vanish
+         */
         if (player.isVanished()) {
             api.vanishList.add(player.getUUID());
             for (Player players : Bukkit.getOnlinePlayers())
-                players.hidePlayer(event.getPlayer());
+                players.hidePlayer(p);
         }
         for (UUID uuid : api.vanishList)
-            event.getPlayer().hidePlayer(Bukkit.getPlayer(uuid));
-        if(!player.getNickName().isEmpty()) {
-            EuphalysApi.getInstance().getNickUtils().setNickName(event.getPlayer(), player.getNickName());
-            player.setNickName(player.getNickName());
-        }
+            p.hidePlayer(Bukkit.getPlayer(uuid));
+
+        /**
+         * Permission
+         */
+        PermissionAttachment attachment = p.addAttachment(EuphalysApi.getInstance());
+        if (player.hasPermission("*"))
+            for (Permission permission : Bukkit.getPluginManager().getPermissions()) {
+                attachment.setPermission(permission, true);
+            }
+        else
+            for (Permission permission : Bukkit.getPluginManager().getPermissions()) {
+                if (player.hasPermission(permission.getName()))
+                    attachment.setPermission(permission, true);
+            }
+        api.attachmentMap.put(player.getUUID(), attachment);
     }
 }

@@ -1,7 +1,9 @@
 package net.euphalys.core.api.commands;
 
+import net.euphalys.api.event.player.NickNameChangeEvent;
 import net.euphalys.api.player.IEuphalysPlayer;
 import net.euphalys.core.api.EuphalysApi;
+import net.euphalys.core.api.player.EuphalysPlayer;
 import net.euphalys.core.api.utils.RankTabList;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -20,15 +22,15 @@ public class NickCommands extends AbstractCommands {
     @Override
     public boolean onCommand(Player player, String[] args) {
         IEuphalysPlayer euphalysPlayer = EuphalysApi.getInstance().getPlayer(player.getUniqueId());
-        String arg = null;
+        String nickname;
 
         if (args.length == 0 || args.length > 1) {
             return false;
         }
         if (args[0].equalsIgnoreCase("off")) {
-            arg = euphalysPlayer.getName();
+            nickname = euphalysPlayer.getName();
         } else {
-            arg = args[0];
+            nickname = args[0];
         }
         if (args[0].length() > 16) {
             player.sendMessage("§cVous devez utilisez un pseudo de 16 charactere maximum !");
@@ -39,16 +41,24 @@ public class NickCommands extends AbstractCommands {
             player.sendMessage("Ce joueurs s'est déjà connecté sur le serveur, vous ne pouvez pas prendre ce pseudo.");
             return true;
         }
-        EuphalysApi.getInstance().getNickUtils().setNickName(player, arg);
-        player.setDisplayName(arg);
-        euphalysPlayer.setNickName(arg);
-        if (arg.equalsIgnoreCase(euphalysPlayer.getName())) {
+        NickNameChangeEvent event = new NickNameChangeEvent(player, nickname);
+        String last = euphalysPlayer.getNickName();
+        euphalysPlayer.setNickName(nickname);
+        Bukkit.getServer().getPluginManager().callEvent(event);
+        if(event.isCancelled()) {
+            euphalysPlayer.setNickName(last);
+            return true;
+        }
+        nickname = event.getNickname();
+
+        EuphalysApi.getInstance().getNickUtils().setNickName(player, nickname);
+        player.setDisplayName(nickname);
+        if (nickname.equalsIgnoreCase(euphalysPlayer.getName())) {
             EuphalysApi.getInstance().getPlayerManager().setNickName(euphalysPlayer.getEuphalysId(), "");
         } else {
-            EuphalysApi.getInstance().getPlayerManager().setNickName(euphalysPlayer.getEuphalysId(), arg);
+            EuphalysApi.getInstance().getPlayerManager().setNickName(euphalysPlayer.getEuphalysId(), nickname);
 
         }
-        RankTabList.updateRank(player);
         return true;
     }
 

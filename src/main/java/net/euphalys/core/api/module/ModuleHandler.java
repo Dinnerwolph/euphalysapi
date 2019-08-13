@@ -95,12 +95,11 @@ public class ModuleHandler implements IModuleHandler {
 
     @Override
     public void disableAllModules() {
-        for (ModuleInfo value : registered.values()) {
-            value.module.onDisable();
+        for (ModuleInfo value : enabled.values()) {
+            disableModule(value.module);
         }
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public <T extends IModule> T getModule(String moduleId) {
         ModuleInfo moduleInfo = enabled.get(moduleId);
@@ -110,6 +109,25 @@ public class ModuleHandler implements IModuleHandler {
             return null;
         }
         return (T) moduleInfo.module;
+    }
+
+    @Override
+    public void disableModule(IModule module) {
+        if (module.getClass().isAnnotationPresent(Module.class)) {
+            Module annotation = module.getClass().getAnnotation(Module.class);
+            disableModule(annotation.id());
+        } else {
+            log.warning("Unable to disable IModule : " + module.getClass().getCanonicalName() + ". No Module annotation defined.");
+        }
+    }
+
+
+    @Override
+    public void disableModule(String module) {
+        if (enabled.containsKey(module)) {
+            enabled.get(module).module.onDisable();
+            enabled.remove(module);
+        }
     }
 
     private class ModuleInfo {

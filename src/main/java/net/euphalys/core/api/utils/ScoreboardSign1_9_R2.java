@@ -21,6 +21,7 @@ public class ScoreboardSign1_9_R2 implements IScoreboardSign {
     private boolean created = false;
     private final VirtualTeam[] lines = new VirtualTeam[15];
     private final Player player;
+    private final String name;
     private String objectiveName;
     private BukkitTask task;
 
@@ -32,6 +33,7 @@ public class ScoreboardSign1_9_R2 implements IScoreboardSign {
      */
     public ScoreboardSign1_9_R2(Player player, String objectiveName) {
         this.player = player;
+        this.name = player.getName();
         this.objectiveName = objectiveName;
         task = new LastLine().runTaskTimer(EuphalysApi.getInstance(), 15 * 20, 15 * 20);
     }
@@ -175,7 +177,7 @@ public class ScoreboardSign1_9_R2 implements IScoreboardSign {
     private PacketPlayOutScoreboardObjective createObjectivePacket(int mode, String displayName) {
         PacketPlayOutScoreboardObjective packet = new PacketPlayOutScoreboardObjective();
         // Nom de l'objectif
-        setField(packet, "a", player.getName());
+        setField(packet, "a", name);
 
         // Mode
         // 0 : créer
@@ -195,14 +197,14 @@ public class ScoreboardSign1_9_R2 implements IScoreboardSign {
         PacketPlayOutScoreboardDisplayObjective packet = new PacketPlayOutScoreboardDisplayObjective();
         // Slot
         setField(packet, "a", 1);
-        setField(packet, "b", player.getName());
+        setField(packet, "b", name);
 
         return packet;
     }
 
     private PacketPlayOutScoreboardScore sendScore(String line, int score) {
         PacketPlayOutScoreboardScore packet = new PacketPlayOutScoreboardScore(line);
-        setField(packet, "b", player.getName());
+        setField(packet, "b", name);
         setField(packet, "c", score);
         setField(packet, "d", PacketPlayOutScoreboardScore.EnumScoreboardAction.CHANGE);
 

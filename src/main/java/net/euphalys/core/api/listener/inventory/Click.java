@@ -4,6 +4,7 @@ import net.euphalys.api.player.IEuphalysPlayer;
 import net.euphalys.core.api.EuphalysApi;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.craftbukkit.v1_14_R1.inventory.CraftInventoryCustom;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -24,8 +25,9 @@ public class Click implements Listener {
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
         if (event.getCurrentItem() == null) return;
+        if (event.getInventory() == null) return;
         if (event.getInventory() instanceof CraftingInventory) return;
-        String name = event.getInventory().getName();
+        String name = event.getView().getTitle();
         if (name.contains("sanctions #")) {
             ItemStack itemStack = event.getCurrentItem();
             event.setCancelled(true);

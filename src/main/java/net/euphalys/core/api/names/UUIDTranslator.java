@@ -35,7 +35,7 @@ public final class UUIDTranslator implements IUUIDTranslator {
         // If the player is online, give them their UUID.
         // Remember, local data > remote data.
         IEuphalysPlayer player = plugin.getPlayer(name);
-        if (player.isOnline())
+        if (player != null && player.isOnline())
             return player.getUUID();
 
         // Check if we can exit early

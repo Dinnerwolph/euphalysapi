@@ -6,11 +6,12 @@
 
     <groupId>net.euphalys</groupId>
     <artifactId>euphalysapi</artifactId>
-    <version>0.5.4</version>
+    <version>0.6</version>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+        <encoding>UTF-8</encoding>
     </properties>
 
     <repositories>
@@ -32,7 +33,7 @@
         <dependency>
             <groupId>net.euphalys</groupId>
             <artifactId>api</artifactId>
-            <version>0.5.4</version>
+            <version>0.6.1</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -44,37 +45,43 @@
         <dependency>
             <groupId>net.md-5</groupId>
             <artifactId>bungeecord-api</artifactId>
-            <version>1.10-SNAPSHOT</version>
+            <version>1.13-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.md-5</groupId>
+            <artifactId>bungeecord-protocol</artifactId>
+            <version>1.13-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.spigotmc</groupId>
-            <artifactId>spigot</artifactId>
-            <version>1.8.8-R0.1-20190425.090436-1</version>
+            <artifactId>spigot-1.8.8</artifactId>
+            <version>1.8.8-R0.1-20190812.100729-1</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.spigotmc</groupId>
-            <artifactId>spigot-1.9</artifactId>
-            <version>1.9.4-R0.1-20190425.121648-1</version>
+            <artifactId>spigot-1.9.4</artifactId>
+            <version>1.9.4-R0.1-20190812.175820-1</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.spigotmc</groupId>
-            <artifactId>spigot-1.12</artifactId>
-            <version>1.12.2-R0.1-20190425.123314-1</version>
+            <artifactId>spigot-1.12.2</artifactId>
+            <version>1.12.2-R0.1-20190812.182056-1</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.spigotmc</groupId>
-            <artifactId>spigot-1.14</artifactId>
-            <version>1.14-R0.1-SNAPSHOT</version>
+            <artifactId>spigot-1.14.4</artifactId>
+            <version>1.14.4-R0.1-20190812.184306-1</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>fr.dinnerwolph</groupId>
             <artifactId>OTL</artifactId>
-            <version>1.0</version>
+            <version>0.4</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

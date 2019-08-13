@@ -16,14 +16,13 @@ import net.md_5.bungee.api.plugin.Command;
 public class ReportCommands extends Command {
 
     public ReportCommands() {
-        super("report");
+        super("report", "euphalys.cmd.report");
     }
 
     @Override
     public void execute(CommandSender commandSender, String[] args) {
         if (commandSender instanceof ProxiedPlayer) {
             IEuphalysPlayer player = Euphalys.getInstance().getPlayer(((ProxiedPlayer) commandSender).getUniqueId());
-            if (player.hasPermission("euphalys.cmd.report")) {
                 if (args.length < 2) {
                     commandSender.sendMessage("§cPour reporter un joueur, merci de suivre cette synthaxe : /report <joueur> <raison>");
                     return;
@@ -46,9 +45,9 @@ public class ReportCommands extends Command {
                     }
                 }
                 Euphalys.getInstance().getReportManager().addReport(Euphalys.getInstance().getPlayer(target.getUniqueId()), player, message);
-            } else {
+            /**} else {
                 commandSender.sendMessage("§cErreur : vous n'avez pas la permission {euphalys.cmd.report}");
-            }
+            }*/
         }
     }
 }

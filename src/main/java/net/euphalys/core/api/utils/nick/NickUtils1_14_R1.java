@@ -27,14 +27,14 @@ public class NickUtils1_14_R1 implements INickUtils {
         PacketPlayOutPlayerInfo addPacket = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER, entityPlayer);
         PacketPlayOutEntityDestroy destroyPacket = new PacketPlayOutEntityDestroy(entityPlayer.getId());
         PacketPlayOutNamedEntitySpawn packet = new PacketPlayOutNamedEntitySpawn(entityPlayer);
-        for (Player online : Bukkit.getOnlinePlayers()) {
+        Bukkit.getOnlinePlayers().forEach(online -> {
             if (!online.equals(player)) {
                 ((CraftPlayer) online).getHandle().playerConnection.sendPacket(removePacket);
                 ((CraftPlayer) online).getHandle().playerConnection.sendPacket(addPacket);
                 ((CraftPlayer) online).getHandle().playerConnection.sendPacket(destroyPacket);
                 ((CraftPlayer) online).getHandle().playerConnection.sendPacket(packet);
             }
-        }
+        });
     }
 
     private void updateSkin(EntityPlayer player, String name) throws IOException {
@@ -44,7 +44,7 @@ public class NickUtils1_14_R1 implements INickUtils {
         ProfileLoader profileLoader = new ProfileLoader(player.getUniqueID().toString(), name, name);
         GameProfile gameProfile = profileLoader.loadProfile();
         try {
-            Field field = player.getClass().getSuperclass().getDeclaredField("bV");
+            Field field = player.getClass().getSuperclass().getDeclaredField("bW");
             field.setAccessible(true);
             field.set(player, gameProfile);
         } catch (NoSuchFieldException | IllegalAccessException e) {

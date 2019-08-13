@@ -27,7 +27,7 @@ import java.util.Map;
 public class ServerCommands extends Command implements TabExecutor {
 
     public ServerCommands() {
-        super("server", "euphalys.cmd.server", new String[0]);
+        super("server", "euphalys.cmd.server");
     }
 
     public void execute(CommandSender sender, String[] args) {
