@@ -12,13 +12,13 @@ import java.util.UUID;
  * @author Dinnerwolph
  */
 
-public class TempBanCommands extends AbstractTempSanctions {
+public class TempBanIpCommands extends AbstractTempSanctions {
 
-    public TempBanCommands() {
-        super("gtempban", "euphalys.cmd.gtempban");
+    public TempBanIpCommands() {
+        super("gtempbanip", "euphalys.cmd.gtempbanip");
     }
 
-    private SanctionsType sanctionsType = SanctionsType.BAN;
+    private SanctionsType sanctionsType = SanctionsType.BANIP;
 
     @Override
     boolean onCommand(IEuphalysPlayer player, String playerName, long duration, String message) {
@@ -28,13 +28,13 @@ public class TempBanCommands extends AbstractTempSanctions {
         if (proxiedPlayer != null)
             //TODO set expiration time
             proxiedPlayer.disconnect(new TextComponent("§2[Euphalys] \n§cVous avez été banni. \n§6Raison : §7" + message + "\n§6Expiration : §7Un certain temps)\n\n\n§7Si vous souhaitez être débanni, nous vous laissons faire une demande de débanissement sur notre site. \nhttps://unban.euphalys.net/"));
-        sendMessage("wesh poto t'as ban " + playerName);
+        sendMessage("wesh poto t'as banip " + playerName);
         return true;
     }
 
 
     @Override
     protected void displayHelp() {
-        sendMessage("/gtempban <player> <duration> <message>");
+        sendMessage("/gtempbanip <player> <duration> <message>");
     }
 }

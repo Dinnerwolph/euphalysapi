@@ -11,24 +11,24 @@ import java.util.List;
 
 public class Group implements IGroup {
 
-    int id;
-    String name;
-    String displayName;
-    String suffix;
-    String chatFormat;
-    String score;
-    int ladder;
-    List<String> permissions;
+    private int id;
+    private String name;
+    private String prefix;
+    private String suffix;
+    private String chatFormat;
+    private String scoreboard;
+    private int ladder;
+    private List<String> permissions;
 
-    public Group(int id, String name, String displayName, String suffix, String chatFormat, int ladder, List<String> permissions, String score) {
+    public Group(int id, String name, String prefix, String suffix, String chatFormat, int ladder, List<String> permissions, String scoreboard) {
         this.id = id;
         this.name = name;
-        this.displayName = displayName;
+        this.prefix = prefix;
         this.suffix = suffix;
         this.chatFormat = chatFormat;
         this.ladder = ladder;
         this.permissions = permissions;
-        this.score = score;
+        this.scoreboard = scoreboard;
     }
 
     @Override
@@ -38,7 +38,7 @@ public class Group implements IGroup {
 
     @Override
     public String getPrefix() {
-        return displayName;
+        return prefix;
     }
 
     @Override
@@ -68,6 +68,6 @@ public class Group implements IGroup {
 
     @Override
     public String getScore() {
-        return score;
+        return scoreboard;
     }
 }

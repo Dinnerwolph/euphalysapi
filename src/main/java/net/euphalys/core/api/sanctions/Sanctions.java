@@ -9,11 +9,12 @@ import net.euphalys.api.sanctions.SanctionsType;
 
 public class Sanctions implements ISanctions {
 
-    int sanctionsId, duration;
-    SanctionsType type;
-    String server, message;
+    private int sanctionsId;
+    private long duration;
+    private SanctionsType type;
+    private String server, message;
 
-    public Sanctions(int sanctionsId, SanctionsType type, int duration, String server, String message) {
+    public Sanctions(int sanctionsId, SanctionsType type, long duration, String server, String message) {
         this.sanctionsId = sanctionsId;
         this.type = type;
         this.duration = duration;
@@ -25,7 +26,7 @@ public class Sanctions implements ISanctions {
         return sanctionsId;
     }
 
-    public int getDuration() {
+    public long getDuration() {
         return duration;
     }
 

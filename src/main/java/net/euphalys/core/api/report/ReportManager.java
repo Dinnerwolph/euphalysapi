@@ -122,8 +122,7 @@ public class ReportManager implements IReportManager {
             Connection connection = dataSource.getConnection();
             PreparedStatement statement = connection.prepareStatement("SELECT `AUTO_INCREMENT`\n" +
                     "FROM  INFORMATION_SCHEMA.TABLES\n" +
-                    "WHERE TABLE_SCHEMA = 'epycube'\n" +
-                    "AND   TABLE_NAME   = 'report';");
+                    "WHERE TABLE_NAME   = 'report';");
             ResultSet resultSet = statement.executeQuery();
             resultSet.next();
             returnInt = resultSet.getInt("AUTO_INCREMENT");

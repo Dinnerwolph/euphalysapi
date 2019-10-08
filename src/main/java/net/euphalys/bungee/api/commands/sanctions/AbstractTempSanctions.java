@@ -3,22 +3,13 @@ package net.euphalys.bungee.api.commands.sanctions;
 import net.euphalys.api.player.IEuphalysPlayer;
 import net.euphalys.bungee.api.Euphalys;
 import net.md_5.bungee.api.CommandSender;
-import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
-import net.md_5.bungee.api.plugin.Command;
-import net.md_5.bungee.api.plugin.TabExecutor;
-
-import java.util.HashSet;
-import java.util.Locale;
-import java.util.Set;
 
 /**
  * @author Dinnerwolph
  */
-public abstract class AbstractTempSanctions extends Command implements TabExecutor {
-
-    private CommandSender commandSender;
+public abstract class AbstractTempSanctions extends AbstractSanctions {
 
     public AbstractTempSanctions(String name, String permission) {
         super(name, permission);
@@ -26,44 +17,59 @@ public abstract class AbstractTempSanctions extends Command implements TabExecut
 
 
     @Override
-    public void execute(CommandSender commandSender, String[] strings) {
+    public void execute(CommandSender commandSender, String[] args) {
         this.commandSender = commandSender;
-        if (commandSender instanceof ProxiedPlayer) {
-            IEuphalysPlayer player = Euphalys.getInstance().getPlayer(((ProxiedPlayer) commandSender).getUniqueId());
-            if (!(strings.length < 3)) {
-                String message = "";
-                for (int i = 2; i < strings.length; i++)
-                    message = message + strings[i] + " ";
-                if (!onCommand(player, strings[0], strings[1], message))
-                    displayHelp();
-            }
-        }
-    }
-
-    abstract boolean onCommand(IEuphalysPlayer player, String playerName, String duration, String message);
-
-    abstract void displayHelp();
-
-    @Override
-    public Iterable<String> onTabComplete(CommandSender sender, String[] args) {
-        Set<String> matches = new HashSet<>();
-        if (args.length == 1) {
-            String search = args[0].toLowerCase(Locale.ROOT);
-            for (ProxiedPlayer player : ProxyServer.getInstance().getPlayers()) {
-                if (player.getName().toLowerCase(Locale.ROOT).startsWith(search)) {
-                    matches.add(player.getName());
+        if (args.length == 0)
+            displayHelp();
+        else {
+            if (commandSender instanceof ProxiedPlayer) {
+                IEuphalysPlayer player = Euphalys.getInstance().getPlayer(((ProxiedPlayer) commandSender).getUniqueId());
+                if (!(args.length < 3)) {
+                    String message = "";
+                    for (int i = 2; i < args.length; i++)
+                        message = message + args[i] + " ";
+                    try {
+                        if (!onCommand(player, args[0], getDuration(args[1]), message))
+                            displayHelp();
+                    } catch (Exception e) {
+                        commandSender.sendMessage(new TextComponent(e.getMessage()));
+                    }
                 }
             }
         }
-        return matches;
     }
 
-    protected void sendMessage(CommandSender player, String... messages) {
-        for (String message : messages)
-            player.sendMessage(new TextComponent(message));
+    private long getDuration(String duration) throws Exception {
+        int first = Integer.parseInt(duration.substring(0, 1));
+        switch (duration.substring(1)) {
+            case "h":
+                long i = 60 * 60 * first * 1000;
+                i = i + System.currentTimeMillis();
+                return i;
+            case "d":
+                long d = 60 * 60 * 24 * first * 1000;
+                d = d + System.currentTimeMillis();
+                return d;
+            case "w":
+                long w = 60 * 60 * 24 * 7 * first * 1000;
+                w = w + System.currentTimeMillis();
+                return w;
+            case "m":
+                long m = 60 * 60 * 24 * 30 * first * 1000;
+                m = m + System.currentTimeMillis();
+                return m;
+            case "y":
+                long y = 60 * 60 * 24 * 365 * first * 1000;
+                y = y + System.currentTimeMillis();
+                return y;
+        }
+        throw new Exception("Error time syntax.");
     }
 
-    protected void sendMessage(String... messages) {
-        sendMessage(commandSender, messages);
+    abstract boolean onCommand(IEuphalysPlayer player, String playerName, long duration, String message);
+
+    @Override
+    boolean onCommand(IEuphalysPlayer player, String playerName, String message) {
+        return false;
     }
 }

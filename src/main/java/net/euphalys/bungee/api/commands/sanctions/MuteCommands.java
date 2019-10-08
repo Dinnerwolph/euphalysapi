@@ -15,7 +15,7 @@ public class MuteCommands extends AbstractSanctions {
 
 
     public MuteCommands() {
-        super("mute", "epycube.cmd.mute");
+        super("gmute", "euphalys.cmd.gmute");
     }
 
     @Override
@@ -24,6 +24,7 @@ public class MuteCommands extends AbstractSanctions {
         Euphalys.getInstance().getSanctionsManager().addGlobalSanction(Euphalys.getInstance().getPlayer(target), SanctionsType.MUTE, 0, message, player);
         ProxiedPlayer proxiedPlayer = Euphalys.getInstance().getProxy().getPlayer(target);
         sendMessage(proxiedPlayer, "Vous êtes mute, vous ne pouvez plus parler.");
+        sendMessage("wesh poto t'as mute " + args);
         return true;
     }
 

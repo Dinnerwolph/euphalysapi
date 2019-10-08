@@ -75,7 +75,7 @@ public class SanctionsManager implements ISanctionsManager {
 
     @Override
     public List<ISanctions> getSanction(IEuphalysPlayer player) {
-        List<ISanctions> returnmap = new ArrayList();
+        List<ISanctions> returnmap = new ArrayList<>();
         try {
             Connection connection = dataSource.getConnection();
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM `sanctions` WHERE `epyId`=? AND `enable`=?");
@@ -83,7 +83,7 @@ public class SanctionsManager implements ISanctionsManager {
             statement.setInt(2, 1);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                Sanctions sanctions = new Sanctions(resultSet.getInt("id"), SanctionsType.getSanctionType(resultSet.getInt("type")), resultSet.getInt("duration"), resultSet.getString("server"), resultSet.getString("message"));
+                Sanctions sanctions = new Sanctions(resultSet.getInt("id"), SanctionsType.getSanctionType(resultSet.getInt("type")), resultSet.getLong("duration"), resultSet.getString("server"), resultSet.getString("message"));
                 returnmap.add(sanctions);
             }
             connection.close();

@@ -13,18 +13,19 @@ import java.util.UUID;
 public class WarnCommands extends AbstractSanctions {
 
     public WarnCommands() {
-        super("warn", "euphalys.cmd.warn");
+        super("gwarn", "euphalys.cmd.warn");
     }
 
     @Override
     boolean onCommand(IEuphalysPlayer player, String args, String message) {
         UUID target = Euphalys.getInstance().getUUUIDTranslator().getUUID(args);
         Euphalys.getInstance().getSanctionsManager().addGlobalSanction(Euphalys.getInstance().getPlayer(target), SanctionsType.WARN, 0, message, player);
+        sendMessage("wesh poto t'as warn " + args);
         return true;
     }
 
     @Override
     protected void displayHelp() {
-        sendMessage("/warn <player> <message>");
+        sendMessage("/gwarn <player> <message>");
     }
 }

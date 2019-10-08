@@ -80,9 +80,9 @@ public class PlayerManager implements IPlayerManager {
     public void loadAllGroup() {
         try {
             Connection connection = dataSource.getConnection();
-            ResultSet resultSet = connection.prepareStatement("SELECT * FROM `group` WHERE 1").executeQuery();
+            ResultSet resultSet = connection.prepareStatement("SELECT * FROM `group`").executeQuery();
             while (resultSet.next()) {
-                api.addGroup(new Group(resultSet.getInt("id"), resultSet.getString("name"), resultSet.getString("prefix"), resultSet.getString("suffix"), resultSet.getString("chat"), resultSet.getInt("ladder"), getPermissions(resultSet.getInt("id")), resultSet.getString("score")));
+                api.addGroup(new Group(resultSet.getInt("id"), resultSet.getString("name"), resultSet.getString("prefix"), resultSet.getString("suffix"), resultSet.getString("chatformat"), resultSet.getInt("ladder"), getPermissions(resultSet.getInt("id")), resultSet.getString("scoreboard")));
             }
             connection.close();
         } catch (SQLException e) {
@@ -177,12 +177,12 @@ public class PlayerManager implements IPlayerManager {
     }
 
     @Override
-    public List<String> getPermissions(int euphaId) {
-        List<String> permissions = new ArrayList();
+    public List<String> getPermissions(int groupId) {
+        List<String> permissions = new ArrayList<>();
         try {
             Connection connection = dataSource.getConnection();
             PreparedStatement statement = connection.prepareStatement("SELECT `permission` FROM `permissions` WHERE `groupid`=?");
-            statement.setInt(1, euphaId);
+            statement.setInt(1, groupId);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next())
                 permissions.add(resultSet.getString("permission"));
@@ -379,6 +379,37 @@ public class PlayerManager implements IPlayerManager {
             Connection connection = dataSource.getConnection();
             PreparedStatement statement = connection.prepareStatement("UPDATE `user` SET `groupId`=? WHERE `id`=?");
             statement.setInt(1, rankId);
+            statement.setInt(2, id);
+            statement.executeUpdate();
+            connection.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public int getPlotsID(int id) {
+        int plotId = -1;
+        try {
+            Connection connection = dataSource.getConnection();
+            PreparedStatement statement = connection.prepareStatement("SELECT `plots` FROM `user` WHERE `id`=?");
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
+            plotId = resultSet.getInt("plots");
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return plotId;
+    }
+
+    @Override
+    public void setPlotsId(int id, int plotsId) {
+        try {
+            Connection connection = dataSource.getConnection();
+            PreparedStatement statement = connection.prepareStatement("UPDATE `user` SET `plots`=? WHERE `id`=?");
+            statement.setInt(1, plotsId);
             statement.setInt(2, id);
             statement.executeUpdate();
             connection.close();

@@ -2,11 +2,9 @@ package net.euphalys.core.api.player;
 
 import net.euphalys.api.player.IEuphalysPlayer;
 import net.euphalys.api.player.IGroup;
-import net.euphalys.api.player.IPlayerManager;
 import net.euphalys.api.plugin.IEuphalysPlugin;
 import net.euphalys.api.sanctions.ISanctions;
 import net.euphalys.core.api.EuphalysApi;
-import net.euphalys.core.api.database.SQLDatabaseManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,12 +30,13 @@ public class EuphalysPlayer implements IEuphalysPlayer {
     private int time_played;
     private long connect;
     private String nickName;
+    private int plotsId;
 
     public EuphalysPlayer(UUID uuid, String name, IEuphalysPlugin api) {
         this.api = api;
         this.uuid = uuid;
         this.name = name;
-        this.permissions = new ArrayList();
+        this.permissions = new ArrayList<>();
 
         if (!api.getPlayerManager().exist(uuid))
             api.getPlayerManager().createUser(uuid, name);
@@ -60,6 +59,7 @@ public class EuphalysPlayer implements IEuphalysPlayer {
         this.friends = this.api.getFriendsManager().namesFriendsList(uuid);
         this.nickName = api.getPlayerManager().getNickName(euphalysId);
         connect = System.currentTimeMillis();
+        this.plotsId = api.getPlayerManager().getPlotsID(euphalysId);
     }
 
     @Override
@@ -188,5 +188,16 @@ public class EuphalysPlayer implements IEuphalysPlayer {
     @Override
     public IGroup getRealGroup() {
         return realGroup;
+    }
+
+    @Override
+    public int getPlotsId() {
+        return plotsId;
+    }
+
+    @Override
+    public void setPlotsId(int plotsId) {
+        this.plotsId = plotsId;
+        this.api.getPlayerManager().setPlotsId(getEuphalysId(), plotsId);
     }
 }

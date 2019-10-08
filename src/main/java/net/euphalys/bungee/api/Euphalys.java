@@ -21,14 +21,14 @@ import net.euphalys.core.api.player.OfflineEuphalysPlayer;
 import net.euphalys.core.api.player.PlayerManager;
 import net.euphalys.core.api.report.ReportManager;
 import net.euphalys.core.api.sanctions.SanctionsManager;
+import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
 
 import java.io.*;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -47,6 +47,7 @@ public class Euphalys extends Plugin implements IEuphalysPlugin {
     private IUUIDTranslator uuidTranslator;
     private Map<Integer, IGroup> groupMap = new ConcurrentHashMap<>();
     private Map<UUID, IEuphalysPlayer> playerMap = new ConcurrentHashMap<>();
+    private Map<ProxiedPlayer, ProxiedPlayer> partyMap = new HashMap<>();
     private boolean maintenance;
 
     @Override
@@ -105,6 +106,13 @@ public class Euphalys extends Plugin implements IEuphalysPlugin {
         getProxy().getPluginManager().registerCommand(this, new SAISCommand());
         getProxy().getPluginManager().registerCommand(this, new GkickCommands());
         getProxy().getPluginManager().registerCommand(this, new MaintenanceCommand());
+        getProxy().getPluginManager().registerCommand(this, new BlackListCommands());
+        getProxy().getPluginManager().registerCommand(this, new TempBanIpCommands());
+        getProxy().getPluginManager().registerCommand(this, new WarnCommands());
+        getProxy().getPluginManager().registerCommand(this, new GUnbanCommands());
+        getProxy().getPluginManager().registerCommand(this, new GUnmuteCommands());
+        getProxy().getPluginManager().registerCommand(this, new GUnwarnCommands());
+        getProxy().getPluginManager().registerCommand(this, new UnblacklistCommands());
     }
 
     public static Euphalys getInstance() {
@@ -196,5 +204,28 @@ public class Euphalys extends Plugin implements IEuphalysPlugin {
 
     public void setMaintenance(boolean maintenance) {
         this.maintenance = maintenance;
+    }
+
+    public boolean partyContains(ProxiedPlayer player) {
+        return partyMap.containsKey(player);
+    }
+
+    public boolean isPartyLeader(ProxiedPlayer player) {
+        if (partyMap.containsKey(player))
+            return partyMap.get(player).equals(player);
+        else
+            return true;
+    }
+
+    public Collection<ProxiedPlayer> getPartyMembers(ProxiedPlayer player) {
+        Collection<ProxiedPlayer> players = new HashSet<>();
+        if (isPartyLeader(player)) {
+            for (ProxiedPlayer proxiedPlayer : partyMap.keySet())
+                if (partyMap.get(proxiedPlayer).equals(player))
+                    players.add(proxiedPlayer);
+            return players;
+        } else {
+            return null;
+        }
     }
 }

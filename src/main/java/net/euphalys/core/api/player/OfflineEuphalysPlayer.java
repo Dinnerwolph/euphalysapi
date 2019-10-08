@@ -25,8 +25,8 @@ public class OfflineEuphalysPlayer implements IEuphalysPlayer {
     public OfflineEuphalysPlayer(UUID uuid, IEuphalysPlugin api) {
         this.uuid = uuid;
         this.plugin = api;
+        this.epyId = api.getPlayerManager().getAzonaryaId(uuid);
         name = api.getPlayerManager().getLastName(uuid);
-        this.epyId = getEuphalysId();
         //TODO permissions solo ?
         //this.permissions.addAll(playerManager.getPermissions(getEuphalysId()));
         this.permissions.addAll(getGroup().getPermissions());
@@ -39,7 +39,7 @@ public class OfflineEuphalysPlayer implements IEuphalysPlayer {
 
     @Override
     public Integer getEuphalysId() {
-        return plugin.getPlayerManager().getAzonaryaId(uuid);
+        return epyId;
     }
 
     @Override
@@ -147,5 +147,15 @@ public class OfflineEuphalysPlayer implements IEuphalysPlayer {
     @Override
     public IGroup getRealGroup() {
         return getGroup();
+    }
+
+    @Override
+    public int getPlotsId() {
+        return plugin.getPlayerManager().getPlotsID(epyId);
+    }
+
+    @Override
+    public void setPlotsId(int plotsId) {
+        this.plugin.getPlayerManager().setPlotsId(getEuphalysId(), plotsId);
     }
 }
