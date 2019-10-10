@@ -25,9 +25,13 @@ public class MaintenanceCommand extends Command {
                     if (Euphalys.getInstance().getPlayer(player.getUniqueId()).getGroup().getGroupId() < 10)
                         player.disconnect(new TextComponent("Maintenance."));
                 }
+                if (Euphalys.getInstance().isMaintenance()){
+                    commandSender.sendMessage(new TextComponent("§cErreur : Le serveur est déjà en maintenance.")); return;}
                 Euphalys.getInstance().setMaintenance(true);
+                commandSender.sendMessage(new TextComponent("§6La maintenance a bien été §lactivé."));
             } else if (args[0].equalsIgnoreCase("off")) {
                 Euphalys.getInstance().setMaintenance(false);
+                commandSender.sendMessage(new TextComponent("§6La maintenance a bien été §ldésactivé."));
             } else {
                 commandSender.sendMessage(new TextComponent("/maintenance <on|off>"));
             }

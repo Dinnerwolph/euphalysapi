@@ -50,7 +50,7 @@ public class Join implements Listener {
          */
 
         if (plugin.isMaintenance() && euphaPlayer.getGroup().getGroupId() < 10) {
-            player.disconnect(new TextComponent("Serveur en maintenance."));
+            player.disconnect(new TextComponent("§cLe serveur est actuellement en maintenance. \n§bRejoignez nous sur discord ! \n§bdiscord.euphalys.net"));
             return;
         }
 

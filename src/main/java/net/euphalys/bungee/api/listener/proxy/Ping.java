@@ -21,7 +21,7 @@ public class Ping implements Listener {
 
     public Ping(String desc) {
         if (desc.isEmpty())
-            desc = "       §b⋙ §aEUPHALYS §b⋘ §c[1.8 - 1.14]       \n              §adiscord.euphalys.net";
+            desc = "               §l§aEUPHALYS §r | §c1.8 - 1.14             \n                §adiscord.euphalys.net";
         this.desc = desc;
     }
 

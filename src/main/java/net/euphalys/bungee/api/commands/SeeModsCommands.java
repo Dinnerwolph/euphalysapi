@@ -26,11 +26,11 @@ public class SeeModsCommands extends Command {
                 }
                 ProxiedPlayer target = Euphalys.getInstance().getProxy().getPlayer(args[0]);
                 if (target == null) {
-                    commandSender.sendMessage("Ce joueur n'est pas connecté.");
+                    commandSender.sendMessage("§cErreur : Ce joueur n'est pas connecté.");
                     return;
                 }
                 if (target.getModList().size() == 0) {
-                    commandSender.sendMessage("Ce joueurs n'utilise pas de mod.");
+                    commandSender.sendMessage("§a✔ §6Aucun mod détecté pour ce joueur.");
                     return;
                 }
                 for (String mods : target.getModList().keySet())
