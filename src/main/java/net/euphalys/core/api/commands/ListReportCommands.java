@@ -23,7 +23,7 @@ public class ListReportCommands extends AbstractCommands {
 
     @Override
     public boolean onCommand(Player player, String[] strings) {
-        Inventory inventory = Bukkit.createInventory(null, 9 * 6, "report");
+        Inventory inventory = Bukkit.createInventory(null, 9 * 6, "§6§lListe des plaintes");
         List<IReport> reports = api.getReportManager().getAllsReports();
         ItemStack itemStack = new ItemStack(Material.PAPER);
         ItemMeta itemMeta = itemStack.getItemMeta();

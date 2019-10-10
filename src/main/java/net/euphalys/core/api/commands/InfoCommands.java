@@ -29,7 +29,7 @@ public class InfoCommands extends AbstractCommands implements TabExecutor {
             return false;
         UUID target = api.getUUUIDTranslator().getUUID(args[0]);
         IEuphalysPlayer targetplayer = api.getPlayer(target);
-        Inventory inventory = Bukkit.createInventory(player, 9 * 6, args[0] + " sanctions");
+        Inventory inventory = Bukkit.createInventory(player, 9 * 6, "§6Sanctions de " + args[0]);
         targetplayer.getSanctions().forEach(sanctions -> {
             ItemStack itemStack = new ItemStack(Material.PAPER);
             ItemMeta itemMeta = itemStack.getItemMeta();

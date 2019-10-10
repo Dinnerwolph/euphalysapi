@@ -24,6 +24,7 @@ public class GroupCommands extends AbstractCommands {
         });
         api.moduleHandler.disableModule("rank");
         api.moduleHandler.enableModuleRegistered("rank");
+        player.sendMessage("§6Les groupes ont été rechargés avec succès !");
         return true;
     }
 
