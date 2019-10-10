@@ -19,11 +19,12 @@ public class SpeedCommands extends AbstractCommands {
         float ratio = speed * 1.8f/20.0f;
         player.setWalkSpeed(ratio);
         player.setFlySpeed(ratio);
+        player.sendMessage("§6Vous venez de définir votre vitesse sur" + player.getFlySpeed());
         return true;
     }
 
     @Override
     protected void displayHelp() {
-        player.sendMessage("/speed <speed value>");
+        player.sendMessage("§c/speed <valeur> (La valeur doit être comprise entre 1 et 11) ");
     }
 }

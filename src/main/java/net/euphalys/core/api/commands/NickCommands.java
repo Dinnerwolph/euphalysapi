@@ -33,12 +33,12 @@ public class NickCommands extends AbstractCommands {
             nickname = args[0];
         }
         if (args[0].length() > 16) {
-            player.sendMessage("§cVous devez utilisez un pseudo de 16 charactere maximum !");
+            player.sendMessage("§cErreur : Votre pseudonyme doit faire 16 caractères maximum.");
             return true;
         }
         OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(args[0]);
         if (EuphalysApi.getInstance().getPlayerManager().exist(offlinePlayer.getUniqueId())) {
-            player.sendMessage("Ce joueurs s'est déjà connecté sur le serveur, vous ne pouvez pas prendre ce pseudo.");
+            player.sendMessage("§cErreur : Ce joueur s'est déjà connecté sur le serveur. Vous ne pouvez pas prendre son pseudo.");
             return true;
         }
         NickNameChangeEvent event = new NickNameChangeEvent(player, nickname);

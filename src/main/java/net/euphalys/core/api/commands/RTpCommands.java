@@ -20,7 +20,7 @@ public class RTpCommands extends AbstractCommands {
         int i = new Random().nextInt(Bukkit.getOnlinePlayers().size());
         Player target = (Player) Bukkit.getOnlinePlayers().toArray()[i];
         player.teleport(target.getLocation());
-        player.sendMessage("§6Vous venez de vous téléporter à" + target.getDisplayName());
+        player.sendMessage("§6Vous venez de vous téléporter à §e:" + target.getDisplayName());
         return true;
 
     }

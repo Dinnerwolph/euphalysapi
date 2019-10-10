@@ -26,7 +26,7 @@ public class TpHereCommands extends AbstractCommands implements TabExecutor {
         if (args.length < 1) return false;
         Player target = Bukkit.getPlayer(args[0]);
         if (target == null) {
-            player.sendMessage("Ce joueurs n'est pas connecté.");
+            player.sendMessage("§cErreur : ce joueur n'est pas connecté.");
             return true;
         }
         target.teleport(player.getLocation(), PlayerTeleportEvent.TeleportCause.PLUGIN);

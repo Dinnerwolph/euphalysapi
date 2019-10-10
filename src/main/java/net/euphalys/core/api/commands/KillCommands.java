@@ -33,7 +33,7 @@ public class KillCommands extends AbstractCommands implements TabExecutor {
         }
 
         target.setHealth(0);
-        player.sendMessage("§6Vous venez de kill §6" + target.getDisplayName());
+        player.sendMessage("§6Vous venez de tuer le joueur §e" + target.getDisplayName());
         return true;
     }
 
