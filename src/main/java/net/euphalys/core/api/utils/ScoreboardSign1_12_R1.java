@@ -388,7 +388,7 @@ public class ScoreboardSign1_12_R1 implements IScoreboardSign {
                 "§7⋙ §bpl§9a§by.euphalys.net", "§7⋙ §bpla§9y§b.euphalys.net", "§7⋙ §bplay§9.§beuphalys.net",
                 "§7⋙ §bplay.§9e§buphalys.net", "§7⋙ §bplay.e§9u§bphalys.net", "§7⋙ §bplay.eu§9p§bhalys.net",
                 "§7⋙ §bplay.eup§9h§balys.net", "§7⋙ §bplay.euph§9a§blys.net", "§7⋙ §bplay.eupha§9l§bys.net",
-                "§7⋙ §bplay.euphal§9y§s.net", "§7⋙ §bplay.euphaly§9s§.net", "§7⋙ §bplay.euphalys§9.§bnet",
+                "§7⋙ §bplay.euphal§9y§bs.net", "§7⋙ §bplay.euphaly§9s§b.net", "§7⋙ §bplay.euphalys§9.§bnet",
                 "§7⋙ §bplay.euphalys.§9n§bet", "§7⋙ §bplay.euphalys.n§9e§bt", "§7⋙ §bplay.euphalys.ne§9t", "§7⋙ §bplay.euphalys.net"};
         int i = 0;
 
