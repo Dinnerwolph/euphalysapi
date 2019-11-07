@@ -1,4 +1,4 @@
-name: EpyCubeApi
+name: EuphalysApi
 version: ${project.version}
 author: Dinnerwolph
 main: net.euphalys.core.api.EuphalysApi

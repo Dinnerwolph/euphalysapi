@@ -140,6 +140,10 @@ public class EuphalysApi extends JavaPlugin implements IEuphalysPlugin {
         this.groupMap = new HashMap();
     }
 
+    public Map<Integer, IGroup> getGroupsCache() {
+        return groupMap;
+    }
+
     @Override
     public IEuphalysPlayer getPlayer(UUID uuid) {
         IEuphalysPlayer player = playerMap.get(uuid);

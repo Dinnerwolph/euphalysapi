@@ -1,7 +1,8 @@
 package net.euphalys.bungee.api.commands.sanctions;
 
-import net.euphalys.api.player.IEuphalysPlayer;
+import net.euphalys.api.sanctions.SanctionsType;
 import net.euphalys.bungee.api.Euphalys;
+import net.euphalys.core.api.EuphalysApi;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -19,32 +20,32 @@ import java.util.Set;
 public abstract class AbstractSanctions extends Command implements TabExecutor {
 
     protected CommandSender commandSender;
+    protected final SanctionsType sanctionsType;
 
-    protected AbstractSanctions(String name, String permission) {
+    protected AbstractSanctions(String name, String permission, SanctionsType sanctionsType) {
         super(name, permission);
+        this.sanctionsType = sanctionsType;
     }
 
 
     @Override
     public void execute(CommandSender commandSender, String[] args) {
         this.commandSender = commandSender;
-        if(args.length == 0)
+        if (args.length == 0)
             displayHelp();
         else {
-            if (commandSender instanceof ProxiedPlayer) {
-                IEuphalysPlayer player = Euphalys.getInstance().getPlayer(((ProxiedPlayer) commandSender).getUniqueId());
-                if (!(args.length < 2)) {
-                    StringBuilder message = new StringBuilder();
-                    for (int i = 1; i < args.length; i++)
-                        message.append(args[i]).append(" ");
-                    if (!onCommand(player, args[0], message.toString()))
-                        displayHelp();
-                }
+            if (!(args.length < 2)) {
+                StringBuilder message = new StringBuilder();
+                for (int i = 1; i < args.length; i++)
+                    message.append(args[i]).append(" ");
+                if (!onCommand(commandSender, args[0], message.toString()))
+                    displayHelp();
             }
         }
     }
 
-    abstract boolean onCommand(IEuphalysPlayer player, String playerName, String message);
+    abstract boolean onCommand(CommandSender sender, String playerName, String message);
+
 
     abstract void displayHelp();
 
@@ -69,5 +70,16 @@ public abstract class AbstractSanctions extends Command implements TabExecutor {
 
     protected void sendMessage(String... messages) {
         sendMessage(commandSender, messages);
+    }
+
+    protected void addGlobalSanction(String targetName, String message, int playerId) {
+        EuphalysApi.getInstance().getSanctionsManager().addGlobalSanction(EuphalysApi.getInstance().getPlayer(targetName), sanctionsType, 0, message, playerId);
+    }
+
+    protected int getUserId() {
+        if (commandSender instanceof ProxiedPlayer)
+            return Euphalys.getInstance().getPlayer(commandSender.getName()).getEuphalysId();
+        else
+            return 0;
     }
 }

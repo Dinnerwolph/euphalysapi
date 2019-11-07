@@ -1,7 +1,8 @@
 package net.euphalys.bungee.api.commands.sanctions;
 
-import net.euphalys.api.player.IEuphalysPlayer;
+import net.euphalys.api.sanctions.SanctionsType;
 import net.euphalys.bungee.api.Euphalys;
+import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.chat.TextComponent;
 
 /**
@@ -10,13 +11,13 @@ import net.md_5.bungee.api.chat.TextComponent;
 public class GkickCommands extends AbstractSanctions {
 
     public GkickCommands() {
-        super("gkick", "euphalys.cmd.gkick");
+        super("gkick", "euphalys.cmd.gkick", SanctionsType.NONE);
     }
 
     @Override
-    boolean onCommand(IEuphalysPlayer player, String playerName, String message) {
-        Euphalys.getInstance().getProxy().getPlayer(player.getUUID()).disconnect(new TextComponent(message));
-        sendMessage("wesh poto t'as kick " + playerName);
+    boolean onCommand(CommandSender sender, String target, String message) {
+        Euphalys.getInstance().getProxy().getPlayer(target).disconnect(new TextComponent(message));
+        sendMessage("wesh poto t'as kick " + target);
         return false;
     }
 

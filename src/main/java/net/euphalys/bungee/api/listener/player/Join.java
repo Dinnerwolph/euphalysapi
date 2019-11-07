@@ -27,6 +27,7 @@ public class Join implements Listener {
     private final Euphalys plugin;
     private final Integer[] version;
     private final String[] server;
+    private final String prefix;
     private final String BLACKLIST;
     private final String BAN;
     private final String TEMPBAN;
@@ -35,9 +36,10 @@ public class Join implements Listener {
         this.plugin = plugin;
         this.version = new Integer[]{47, 110, 340, 498};
         this.server = new String[]{"Hub1-8", "Hub1-9", "Hub1-12", "Hub1-14"};
-        this.BLACKLIST = "§2[Euphalys] \n§cVous êtes blacklisté ! \n\n§6Raison : §7%1$s \n\n\n§7Vous ne pouvez pas formuler de demande de débanissement. Un blacklist est définitif et sans appel.";
-        this.BAN = "§2[Euphalys] \n§cVous avez été banni définitivement. \n§6Raison : §7%1$s \n§6Expiration : §7Banissement définitif\n\n\n§7Si vous souhaitez être débanni, nous vous laissons faire une demande de débanissement sur notre site. \nhttps://unban.euphalys.net/";
-        this.TEMPBAN = "§2[Euphalys] \n§cVous avez été banni. \n§6Raison : §7%1$s \n§6Expiration : §7%2$s\n\n\n§7Si vous souhaitez être débanni, nous vous laissons faire une demande de débanissement sur notre site. \nhttps://unban.euphalys.net/";
+        this.prefix = "§2[Euphalys] \n";
+        this.BLACKLIST = "§cVous êtes blacklisté ! \n\n§6Raison : §7%1$s \n\n\n§7Vous ne pouvez pas formuler de demande de débanissement. Un blacklist est définitif et sans appel.";
+        this.BAN = "§cVous avez été banni définitivement. \n§6Raison : §7%1$s \n§6Expiration : §7Banissement définitif\n\n\n§7Si vous souhaitez être débanni, nous vous laissons faire une demande de débanissement sur notre site. \nhttps://unban.euphalys.net/";
+        this.TEMPBAN = "§cVous avez été banni. \n§6Raison : §7%1$s \n§6Expiration : §7%2$s\n\n\n§7Si vous souhaitez être débanni, nous vous laissons faire une demande de débanissement sur notre site. \nhttps://unban.euphalys.net/";
     }
 
     @EventHandler

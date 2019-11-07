@@ -3,7 +3,6 @@ package net.euphalys.core.api.listener.player;
 import net.euphalys.api.player.IEuphalysPlayer;
 import net.euphalys.core.api.EuphalysApi;
 import net.euphalys.core.api.player.EuphalysPlayer;
-import net.euphalys.core.api.utils.RankTabList;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -45,11 +44,14 @@ public class Join implements Listener {
         /**
          * Vanish
          */
-        if (player.isVanished()) {
-            api.vanishList.add(player.getUUID());
-            for (Player players : Bukkit.getOnlinePlayers())
-                players.hidePlayer(p);
-        }
+        Bukkit.getScheduler().runTaskLaterAsynchronously(EuphalysApi.getInstance(), () -> {
+            if (player.isVanished()) {
+                api.vanishList.add(player.getUUID());
+                for (Player players : Bukkit.getOnlinePlayers())
+                    players.hidePlayer(p);
+            }
+        }, 1000L);
+
         for (UUID uuid : api.vanishList)
             p.hidePlayer(Bukkit.getPlayer(uuid));
 
@@ -58,14 +60,13 @@ public class Join implements Listener {
          */
         PermissionAttachment attachment = p.addAttachment(EuphalysApi.getInstance());
         if (player.hasPermission("*"))
-            for (Permission permission : Bukkit.getPluginManager().getPermissions()) {
+            for (Permission permission : Bukkit.getPluginManager().getPermissions())
                 attachment.setPermission(permission, true);
-            }
         else
-            for (Permission permission : Bukkit.getPluginManager().getPermissions()) {
+            for (Permission permission : Bukkit.getPluginManager().getPermissions())
                 if (player.hasPermission(permission.getName()))
                     attachment.setPermission(permission, true);
-            }
+
         api.attachmentMap.put(player.getUUID(), attachment);
     }
 }

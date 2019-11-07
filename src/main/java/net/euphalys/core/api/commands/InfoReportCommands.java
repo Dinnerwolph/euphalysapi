@@ -1,6 +1,7 @@
 package net.euphalys.core.api.commands;
 
 import net.euphalys.api.report.IReport;
+import net.euphalys.core.api.EuphalysApi;
 import org.bukkit.entity.Player;
 
 /**
@@ -20,8 +21,8 @@ public class InfoReportCommands extends AbstractCommands {
         int id = Integer.parseInt(args[0]);
         IReport report = api.getReportManager().getReport(id);
         player.sendMessage("ReportId: " + args[0]);
-        player.sendMessage("Reported: " + report.getTarget());
-        player.sendMessage("By: " + report.getReportedBy());
+        player.sendMessage("Reported: " + EuphalysApi.getInstance().getUUUIDTranslator().getName(report.getTarget()));
+        player.sendMessage("By: " + EuphalysApi.getInstance().getUUUIDTranslator().getName(report.getReportedBy()));
         player.sendMessage("Reason: " + report.getMessage());
         return true;
     }

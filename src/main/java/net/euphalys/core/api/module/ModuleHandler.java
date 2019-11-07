@@ -116,6 +116,7 @@ public class ModuleHandler implements IModuleHandler {
         if (module.getClass().isAnnotationPresent(Module.class)) {
             Module annotation = module.getClass().getAnnotation(Module.class);
             disableModule(annotation.id());
+            log.info("Disabling  module : " + module.getClass().getSimpleName());
         } else {
             log.warning("Unable to disable IModule : " + module.getClass().getCanonicalName() + ". No Module annotation defined.");
         }

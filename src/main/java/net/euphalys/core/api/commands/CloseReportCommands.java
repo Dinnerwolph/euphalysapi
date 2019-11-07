@@ -18,6 +18,7 @@ public class CloseReportCommands extends AbstractCommands {
             return false;
         int id = Integer.parseInt(args[0]);
         api.getReportManager().closeReport(id);
+        player.sendMessage("Vous venez de fermer le report n°" + id);
         return true;
     }
 

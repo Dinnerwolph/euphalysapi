@@ -1,18 +1,19 @@
 package net.euphalys.bungee.api.commands.sanctions;
 
-import net.euphalys.api.player.IEuphalysPlayer;
-import net.euphalys.bungee.api.Euphalys;
+import net.euphalys.api.sanctions.SanctionsType;
+import net.euphalys.core.api.EuphalysApi;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.chat.TextComponent;
-import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 /**
  * @author Dinnerwolph
  */
 public abstract class AbstractTempSanctions extends AbstractSanctions {
 
-    public AbstractTempSanctions(String name, String permission) {
-        super(name, permission);
+    private long duration;
+
+    public AbstractTempSanctions(String name, String permission, SanctionsType sanctionsType) {
+        super(name, permission, sanctionsType);
     }
 
 
@@ -22,18 +23,16 @@ public abstract class AbstractTempSanctions extends AbstractSanctions {
         if (args.length == 0)
             displayHelp();
         else {
-            if (commandSender instanceof ProxiedPlayer) {
-                IEuphalysPlayer player = Euphalys.getInstance().getPlayer(((ProxiedPlayer) commandSender).getUniqueId());
-                if (!(args.length < 3)) {
-                    String message = "";
-                    for (int i = 2; i < args.length; i++)
-                        message = message + args[i] + " ";
-                    try {
-                        if (!onCommand(player, args[0], getDuration(args[1]), message))
-                            displayHelp();
-                    } catch (Exception e) {
-                        commandSender.sendMessage(new TextComponent(e.getMessage()));
-                    }
+            if (!(args.length < 3)) {
+                String message = "";
+                for (int i = 2; i < args.length; i++)
+                    message = message + args[i] + " ";
+                try {
+                    if (!onCommand(commandSender, args[0], getDuration(args[1]), message))
+                        displayHelp();
+                    duration = getDuration(args[1]);
+                } catch (Exception e) {
+                    commandSender.sendMessage(new TextComponent(e.getMessage()));
                 }
             }
         }
@@ -66,10 +65,15 @@ public abstract class AbstractTempSanctions extends AbstractSanctions {
         throw new Exception("Error time syntax.");
     }
 
-    abstract boolean onCommand(IEuphalysPlayer player, String playerName, long duration, String message);
+    abstract boolean onCommand(CommandSender sender, String playerName, long duration, String message);
 
     @Override
-    boolean onCommand(IEuphalysPlayer player, String playerName, String message) {
+    boolean onCommand(CommandSender player, String playerName, String message) {
         return false;
+    }
+
+    @Override
+    protected void addGlobalSanction(String targetName, String message, int playerId) {
+        EuphalysApi.getInstance().getSanctionsManager().addGlobalSanction(EuphalysApi.getInstance().getPlayer(targetName), sanctionsType, duration, message, playerId);
     }
 }

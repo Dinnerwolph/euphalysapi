@@ -29,12 +29,12 @@ public class SanctionsManager implements ISanctionsManager {
     }
 
     @Override
-    public void addsanction(IEuphalysPlayer target, SanctionsType type, long duration, String message, IEuphalysPlayer player) {
-        addsanction(player, type, duration, api.getServerName(), message, player);
+    public void addsanction(IEuphalysPlayer target, SanctionsType type, long duration, String message, int playerId) {
+        addsanction(target, type, duration, api.getServerName(), message, playerId);
     }
 
     @Override
-    public void addsanction(IEuphalysPlayer target, SanctionsType type, long duration, String server, String message, IEuphalysPlayer player) {
+    public void addsanction(IEuphalysPlayer target, SanctionsType type, long duration, String server, String message, int playerId) {
         try {
             Connection connection = dataSource.getConnection();
             PreparedStatement statement = connection.prepareStatement("INSERT INTO `sanctions`(`epyId`, `type`, `duration`, `server`, `message`, `ip`, `by`, `enable`) VALUES (?,?,?,?,?,?,?,?)");
@@ -44,7 +44,7 @@ public class SanctionsManager implements ISanctionsManager {
             statement.setString(4, server);
             statement.setString(5, message);
             statement.setString(6, target.getLastAddress());
-            statement.setInt(7, player.getEuphalysId());
+            statement.setInt(7, playerId);
             statement.setInt(8, 1);
             statement.executeUpdate();
             connection.close();
@@ -55,8 +55,8 @@ public class SanctionsManager implements ISanctionsManager {
     }
 
     @Override
-    public void addGlobalSanction(IEuphalysPlayer target, SanctionsType type, long duration, String message, IEuphalysPlayer player) {
-        addsanction(target, type, duration, "global", message, player);
+    public void addGlobalSanction(IEuphalysPlayer target, SanctionsType type, long duration, String message, int playerId) {
+        addsanction(target, type, duration, "global", message, playerId);
     }
 
     @Override

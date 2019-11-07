@@ -6,7 +6,7 @@
 
     <groupId>net.euphalys</groupId>
     <artifactId>euphalysapi</artifactId>
-    <version>0.6</version>
+    <version>0.6.3</version>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -33,7 +33,7 @@
         <dependency>
             <groupId>net.euphalys</groupId>
             <artifactId>api</artifactId>
-            <version>0.6.2</version>
+            <version>0.6.3-d</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -45,13 +45,7 @@
         <dependency>
             <groupId>net.md-5</groupId>
             <artifactId>bungeecord-api</artifactId>
-            <version>1.13-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>net.md-5</groupId>
-            <artifactId>bungeecord-protocol</artifactId>
-            <version>1.13-SNAPSHOT</version>
+            <version>1.14-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
